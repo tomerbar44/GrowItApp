@@ -1,7 +1,8 @@
-import { PLANTS_LOADED, PLANTS_LOADING, SET_LOCATION, SET_VALUE } from '../actions/plantsTypes';
+import { PLANTS_LOADED, PLANTS_LOADING, SET_LOCATION, SET_VALUE,PLANTS_TYPE_LOADED } from '../actions/plantsTypes';
 const initialState = {
   location: { lat: null, lon: null },
   plantsList: ['TESTING'],
+  types:[],
   recentSearches: [],
   isLoading: false,
   storedVal: 'default value'
@@ -15,6 +16,18 @@ export default (state = initialState, action) => {
         ...state,
         plantsList: action.plantsList,
         recentSearches: state.recentSearches.concat(action.search),
+        isLoading: false
+      };
+    case PLANTS_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      };
+
+      case PLANTS_TYPE_LOADED:
+      return {
+        ...state,
+        types: action.types,
         isLoading: false
       };
     case PLANTS_LOADING:

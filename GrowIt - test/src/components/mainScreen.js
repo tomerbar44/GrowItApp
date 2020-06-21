@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image,FlatList } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { setLocationAction, testSecureStorage } from '../redux/actions/plantActions'
+import { setLocationAction, testSecureStorage,getGrowItTypes } from '../redux/actions/plantActions'
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -12,7 +12,8 @@ import { useSelector } from 'react-redux';
 const GrowItApp = ({ navigation }) => {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(setLocationAction())
+    // dispatch(setLocationAction())
+    dispatch(getGrowItTypes());
     SecureStore.getItemAsync('testStoreKey')
       .then((value) => {
 
@@ -24,6 +25,7 @@ const GrowItApp = ({ navigation }) => {
   const plantsList = useSelector((state) => state.plantsReducer.plantsList);
   const location = useSelector((state) => state.plantsReducer.location);
   const storedVal = useSelector((state) => state.plantsReducer.storedVal)
+  const types = useSelector((state) => state.plantsReducer.types)
 
 
   return (
@@ -31,6 +33,28 @@ const GrowItApp = ({ navigation }) => {
 
       <View style={styles.slogenContainer}>
         <Text style={styles.message}> Hey, we are GrowIt ! 😀</Text>
+        <FlatList
+          key={2}
+          data={types}
+          renderItem={({ item }) => <TouchableOpacity
+          onPress={() => {
+            // navigation.navigate('PlantListSuggested', {
+            //   buttonType: "flowers"
+            // })
+
+            //! testing secure storage - SET
+            dispatch(testSecureStorage())
+            //! testing secure storage - SET
+          }}
+        >
+          <Image
+            style={styles.typeIcon}
+            source={{ uri: 'https://img.icons8.com/doodle/96/000000/plant-under-sun--v1.png' }}
+          />
+        </TouchableOpacity>}
+          keyExtractor={(item) => item.id}
+        />
+
         {/* <Text> {plantsList[0]} </Text> */}
 
         {/* <Text> {location.lat} </Text>

@@ -33,9 +33,40 @@ export const setLocationAction = () => (dispatch) => {
                 lon: 'simulator lon'
             })
         })
+}
 
+export const getGrowItTypes = () => (dispatch) => {
 
+const url = `http://localhost:3000/GrowIt/api/type`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((json) => {
+      dispatch({
+        type: PLANTS_TYPE_LOADED,
+        types: json.dbresult
+    });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
+    // askPermissionFromUser()
+    //     .then((coordinates) => {
+    //         // console.log(coordinates.coords)
+    //         dispatch({
+    //             type: SET_LOCATION,
+    //             lat: coordinates.coords.latitude,
+    //             lon: coordinates.coords.longitude
+    //         })
+    //     })
+    //     .catch((e) => {
+    //         console.log('e!!')
+    //         dispatch({
+    //             type: SET_LOCATION,
+    //             lat: 'simulator lat',
+    //             lon: 'simulator lon'
+    //         })
+    //     })
 }
 
 export const testSecureStorage = () => (dispatch) => {
