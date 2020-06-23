@@ -2,24 +2,26 @@ import React, { useEffect } from 'react';
 import { Text, View, TouchableOpacity, Image,FlatList } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { setLocationAction, testSecureStorage,getGrowItTypes } from '../redux/actions/plantActions'
+
 import * as SecureStore from 'expo-secure-store';
 
 
 import { bool, object, array, func } from 'prop-types';
 import styles from '../style/style';
 import { useSelector } from 'react-redux';
+import PlantListSuggested from './PlantListSuggested';
 
 const GrowItApp = ({ navigation }) => {
   const dispatch = useDispatch()
   useEffect(() => {
-    // dispatch(setLocationAction())
     dispatch(getGrowItTypes());
-    SecureStore.getItemAsync('testStoreKey')
-      .then((value) => {
+    dispatch(setLocationAction())
+    // SecureStore.getItemAsync('testStoreKey')
+    //   .then((value) => {
 
-      }).catch((error) => {
+    //   }).catch((error) => {
 
-      })
+    //   })
   }, [])
 
   const plantsList = useSelector((state) => state.plantsReducer.plantsList);
@@ -33,17 +35,17 @@ const GrowItApp = ({ navigation }) => {
 
       <View style={styles.slogenContainer}>
         <Text style={styles.message}> Hey, we are GrowIt ! 😀</Text>
-        <FlatList
+        {/* <FlatList
           key={2}
           data={types}
           renderItem={({ item }) => <TouchableOpacity
           onPress={() => {
-            // navigation.navigate('PlantListSuggested', {
-            //   buttonType: "flowers"
-            // })
+            navigation.navigate('PlantListSuggested', {
+              buttonType: "flowers"
+            })
 
             //! testing secure storage - SET
-            dispatch(testSecureStorage())
+            // dispatch(testSecureStorage())
             //! testing secure storage - SET
           }}
         >
@@ -53,7 +55,7 @@ const GrowItApp = ({ navigation }) => {
           />
         </TouchableOpacity>}
           keyExtractor={(item) => item.id}
-        />
+        /> */}
 
         {/* <Text> {plantsList[0]} </Text> */}
 
@@ -64,14 +66,15 @@ const GrowItApp = ({ navigation }) => {
       </View>
 
       <View style={styles.typeIconContainer}>
+
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate('PlantListSuggested', {
-            //   buttonType: "flowers"
-            // })
+            navigation.navigate("PlantListSuggested", {
+              buttonType: "flower"
+            })
 
             //! testing secure storage - SET
-            dispatch(testSecureStorage())
+            // dispatch(testSecureStorage())
             //! testing secure storage - SET
           }}
         >
@@ -80,7 +83,8 @@ const GrowItApp = ({ navigation }) => {
             source={{ uri: 'https://img.icons8.com/doodle/96/000000/plant-under-sun--v1.png' }}
           />
         </TouchableOpacity>
-        <TouchableOpacity
+
+        {/* <TouchableOpacity
           onPress={() => {
             // navigation.navigate('PlantListSuggested', {
             //   buttonType: "plants"
@@ -95,10 +99,10 @@ const GrowItApp = ({ navigation }) => {
             style={styles.typeIcon}
             source={{ uri: 'https://img.icons8.com/color/96/000000/group-of-vegetables.png' }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
-      <View style={styles.typeIconContainer}>
+      {/* <View style={styles.typeIconContainer}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('PlantListSuggested', {
@@ -123,7 +127,7 @@ const GrowItApp = ({ navigation }) => {
             source={{ uri: 'https://img.icons8.com/color/96/000000/group-of-fruits.png' }}
           />
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };

@@ -7,11 +7,36 @@ import { Provider } from 'react-redux';
 import GrowItApp from './src/components/mainScreen';
 import PlantListSuggested from './src/components/PlantListSuggested';
 import PlantPage from './src/components/PlantPage'
+import myPlantsPage from './src/components/myPlantsPage'
 import store from './src/redux/store'
 // import * as Location from 'expo-location'
-import './src/localNotification'
+// import './src/localNotification'
 
 const Stack = createStackNavigator();
+
+const MyPlantsIcon = ({ navigation }) => {
+  return (
+    <Icon
+      name="tree"
+      color="black"
+      type='font-awesome'
+      size={25}
+      containerStyle={{ paddingRight: 20, paddingBottom: 5 }}
+      onPress={() => navigation.navigate('MyPlants')}
+    // onPress={async () => {
+    //   // console.log('tal')
+    //   const res = await fetch('https://mobile-final-project-server.herokuapp.com/test', {
+    //     body:{
+    //       let:1,
+    //       lat:2
+    //     }
+    //   })
+    //   console.log('res = ', res)
+    // }}
+    />
+  )
+
+}
 
 
 export default function App() {
@@ -35,29 +60,30 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={GrowItApp}
-            options={{
+            options={({navigation}) => ({
               title: 'GrowIt',
               headerRight: () => (
+                // <MyPlantsIcon />
                 <Icon
                   name="tree"
                   color="black"
                   type='font-awesome'
                   size={25}
                   containerStyle={{ paddingRight: 20, paddingBottom: 5 }}
-                  // onPress={() => navigation.navigate('FavoriteScreen')}
-                  onPress={async () => {
-                    // console.log('tal')
-                    const res = await fetch('https://mobile-final-project-server.herokuapp.com/test', {
-                      body:{
-                        let:1,
-                        lat:2
-                      }
-                    })
-                    console.log('res = ', res)
-                  }}
+                  onPress={() => navigation.navigate('myPlantsPage')}
+                // onPress={async () => {
+                //   // console.log('tal')
+                //   const res = await fetch('https://mobile-final-project-server.herokuapp.com/test', {
+                //     body:{
+                //       let:1,
+                //       lat:2
+                //     }
+                //   })
+                //   console.log('res = ', res)
+                // }}
                 />
               ),
-            }}
+            })}
 
           />
           <Stack.Screen
@@ -68,7 +94,12 @@ export default function App() {
           <Stack.Screen
             name="PlantPage"
             component={PlantPage}
-            options={({ route }) => ({ title: route.params.name ,headerBackTitle: 'Back'})}
+            options={({ route }) => ({ title: route.params.name, headerBackTitle: 'Back' })}
+          />
+          <Stack.Screen
+            name="myPlantsPage"
+            component={myPlantsPage}
+            // options={({ route }) => ({ title: route.params.name, headerBackTitle: 'Back' })}
           />
         </Stack.Navigator>
       </NavigationContainer>

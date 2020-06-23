@@ -1,42 +1,31 @@
 import * as React from 'react';
 import { object } from 'prop-types';
 import { TouchableOpacity, Image, Text, View } from 'react-native';
-import { Audio } from 'expo-av';
 import styles from '../style/style';
 
-const SC_KEY = '?client_id=CW62xLA9h8wXrXC1WIaSX9OWA6novVIE';
-const soundObject = new Audio.Sound();
 
-async function playTrack(stream_url) {
-  try {
-    await soundObject.unloadAsync();
-    await soundObject.loadAsync({ uri: stream_url + SC_KEY });
-    await soundObject.playAsync();
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 function PlantItem({ plantObj,navigation }) {
+  // console.log(plantObj.imgUrl)
   return (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('PlantPage', {
-          name: plantObj.title
+          plantObj: plantObj
         })
       }}
     >
       <View style={styles.itemList}>
         <Image
           style={styles.typeIcon}
-          source={{ uri: plantObj.artwork_url ? plantObj.artwork_url : plantObj.waveform_url }}
+          source={{uri:plantObj.imgUrl}}
         />
         <View style={styles.textArea}>
-          <Text style={styles.titleList}>{plantObj.title}</Text>
+          <Text style={styles.titleList}>{plantObj.name}</Text>
           {/* <View style={styles.itemList}> */}
-          <Text style={styles.textList}>Likes: {plantObj.likes_count}</Text>
-            <Text style={styles.textList}>Likes: {plantObj.likes_count}</Text>
-            <Text style={styles.textList}>Likes: {plantObj.likes_count}</Text>
+          <Text style={styles.textList}>type: {plantObj.type}</Text>
+            <Text style={styles.textList}>waterAmount: {plantObj.waterAmount}</Text>
+            <Text style={styles.textList}>recommendedTemp: {plantObj.recommendedTemp}</Text>
           {/* </View> */}
         </View>
       </View>

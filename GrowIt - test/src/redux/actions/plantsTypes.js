@@ -4,4 +4,5 @@ export const PLANTS_TYPE_LOADED = 'PLANTS_TYPE_LOADED';
 export const PLANTS_LOADING = 'PLANTS_LOADING';
 export const SET_LOCATION = 'SET_LOCATION'
 export const SET_VALUE = 'SET_VALUE'
-
+export const SET_PLANTS_LIST = 'SET_PLANTS_LIST'
+export const ADD_PLANT_TO_LIST = 'ADD_PLANT_TO_LIST'
