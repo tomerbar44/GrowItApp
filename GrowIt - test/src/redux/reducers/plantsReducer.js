@@ -23,7 +23,7 @@ const initialState = {
   types: [],
   isLoading: false,
   storedVal: 'default value',
-  myPlants:[...bringDataFromMemory()] // the init is to bring from memory the former plants 
+  myPlants:[] // the init is to bring from memory the former plants 
 };
 
 export default (state = initialState, action) => {

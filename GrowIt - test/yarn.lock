@@ -1031,6 +1031,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/comfortaa@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/comfortaa/-/comfortaa-0.1.0.tgz#8321f87a42dc6bda420691354feb24eccb8b0668"
+  integrity sha512-DTvEiqFf2bjOgKMBqSWNIFweqw6DyzNQrLyzFeO5WGlNKET252nVju5fY8Ur/TInvKjhp4Sc59VLZyVrETrYLQ==
+
 "@expo/vector-icons@^10.0.2":
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.2.0.tgz#3c70656683a6a873e18efc00bc61fc160a80dc55"

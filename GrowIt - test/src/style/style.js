@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
   },
   activityIndator: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:'white'
   },
   itemList: {
     flex: 1,
@@ -21,9 +22,9 @@ const styles = StyleSheet.create({
     marginTop:15
     },
     typeIcon: {
-      margin: 20,
-      width: 90,
-      height: 90,
+      margin: 10,
+      width: 100,
+      height: 100,
       backgroundColor:'#A1DEC0',
     },
     typeIconContainer: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     },
     slogenContainer: {
       margin:10,
-      height:'10%',
+      height:'15%',
       borderWidth: 2,
       borderRadius: 2,
       borderStyle: 'dashed',

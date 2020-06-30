@@ -68,7 +68,7 @@ export const getGrowItTypes = () => (dispatch) => {
     fetch(url)
         .then((response) => response.json())
         .then((json) => {
-            // console.log('api json = ', json)
+            console.log('api json = ', json)
             dispatch({
                 type: PLANTS_TYPE_LOADED,
                 types: json.dbresult
@@ -123,7 +123,7 @@ export const plantsLoaded = () => (dispatch) => {
 
 export const addToMyPlants = (plant) => (dispatch) => {
     console.log('insideAddToMyPlan!')
-    addNewPlantToMemory(plant)
+    // addNewPlantToMemory(plant)
     console.log('be4 dispatch on addToMyPlants')
     dispatch({
         type: ADD_PLANT_TO_LIST,
