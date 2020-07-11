@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as Location from 'expo-location';
-import * as SecureStore from 'expo-secure-store';
+// import * as SecureStore from 'expo-secure-store';
+import { AsyncStorage } from 'react-native';
 
 import { SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, PLANTS_LOADING, PLANTS_LOADED, ADD_PLANT_TO_LIST } from './plantsTypes';
 
@@ -16,31 +17,32 @@ async function askPermissionFromUser() {
     return location
 }
 
-async function saveToMemory(plantToAdd) {
-    try {
-        await SecureStore.setItemAsync('myPlants', plantToAdd)
-        console.log('saved on memory!@!')
+// async function saveToMemory(plantToAdd) {
+//     try {
+//         await AsyncStorage.setItem('myPlants', plantToAdd)
+//         console.log('saved on memory!@!')
 
-    } catch (error) {
-        console.log(error.message)
-    }
-}
+//     } catch (error) {
+//         console.log(error.message)
+//     }
+// }
 
-async function addNewPlantToMemory(plantToAdd) {
-    try {
-        const plants = await SecureStore.getItemAsync('myPlants')
-        console.log('plants === ', plants)
-        if (plants == null) {
-            saveToMemory(JSON.stringify(plantToAdd))
-        } else {
-            let allPlants = [...plants, plantToAdd]
-            saveToMemory(JSON.stringify(allPlants))
-        }
+// async function addNewPlantToMemory(plantToAdd) {
+//     try {
+//         const plants = await AsyncStorage.getItem('myPlants').then(data => JSON.parse(data))
+//         console.log('plants === ', plants)
+//         if (plants == null) {
+//             saveToMemory(JSON.stringify(plantToAdd))
+//         } else {
+//             console.log('plants more then one =>',plants)
+//             let allPlants = [...plants, plantToAdd]
+//             saveToMemory(JSON.stringify(allPlants))
+//         }
 
-    } catch (error) {
-        console.log(error.message)
-    }
-}
+//     } catch (error) {
+//         console.log(error.message)
+//     }
+// }
 
 export const setLocationAction = () => (dispatch) => {
     askPermissionFromUser()
@@ -84,7 +86,7 @@ export const getGrowItTypes = () => (dispatch) => {
 
 
 export const testSecureStorage = () => (dispatch) => {
-    SecureStore.setItemAsync('testStoreKey', 'hahaha')
+    AsyncStorage.setItem('testStoreKey', 'hahaha')
         .then(() => {
             console.log('success to save!')
             dispatch({
@@ -123,7 +125,7 @@ export const plantsLoaded = () => (dispatch) => {
 
 export const addToMyPlants = (plant) => (dispatch) => {
     console.log('insideAddToMyPlan!')
-    addNewPlantToMemory(plant)
+    // addNewPlantToMemory(plant)
     console.log('be4 dispatch on addToMyPlants')
     dispatch({
         type: ADD_PLANT_TO_LIST,

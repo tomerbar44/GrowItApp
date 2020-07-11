@@ -10,6 +10,7 @@ import { bool, object, array, func } from 'prop-types';
 import styles from '../style/style';
 import { useSelector } from 'react-redux';
 import PlantListSuggested from './PlantListSuggested';
+import { AsyncStorage } from 'react-native';
 
 const GrowItApp = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -22,6 +23,7 @@ const GrowItApp = ({ navigation }) => {
     //   }).catch((error) => {
 
     //   })
+    AsyncStorage.clear((err) => {console.log('asyncStorage err = ', err)})
   }, [])
 
   const plantsList = useSelector((state) => state.plantsReducer.plantsList);
