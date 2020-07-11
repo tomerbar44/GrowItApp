@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { object } from 'prop-types';
-import { FlatList, Text, View, ActivityIndicator, Button, TouchableOpacity, Image } from 'react-native';
+import { Image } from 'react-native';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body,Toast ,Right  } from 'native-base';
+// import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
+
+
 import {addToMyPlants} from '../redux/actions/plantActions';
 import styles from '../style/style';
 import PlantItem from './PlantItem'
 // import { Toast, Button } from 'native-base'
 import ToastType from './ToastButton'
+
+
 
 function PlantListSuggested ({ navigation, route }) {
   const dispatch = useDispatch()
@@ -16,54 +22,59 @@ function PlantListSuggested ({ navigation, route }) {
   const { plantObj } = route.params
   // console.log('navigation = ', navigation)
   // console.log('plantObj = ', plantObj)
-
+  // let [fontsLoaded] = useFonts({
+  //   Comfortaa_600SemiBold,
+  // });
+  async function buttonEvent() {
+    await dispatch(addToMyPlants(plantObj))
+    Toast.show({
+          text: `${plantObj.name} added to your garden ! 🥳`,
+          textStyle: { fontFamily:'Comfortaa_600SemiBold'},
+          buttonText: "Okay",
+          buttonTextStyle: { fontFamily:'Comfortaa_600SemiBold',color:'blue'},
+          type: "success",
+          duration:2500,
+          onClose()	{
+             navigation.navigate('myPlantsPage')
+          }
+        })
+  }
+ 
   return (
-    <View style={styles.container}>
-      {/* <img src="https://img.icons8.com/doodle/96/000000/beautiful-flower.png"/>         */}
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <Image
-          style={{ flex: 1, width: 200, marginLeft: '25%', height: 200, resizeMode: 'contain' }}
-          source={{ uri: plantObj.imgUrl }}
-        // 'https://img.icons8.com/doodle/96/000000/beautiful-flower.png'
-        />
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          backgroundColor: '#A1DEC0',
-          margin: 10
-        }}>
-          <Text style={styles.message}>{plantObj.description}</Text>
-        </View>
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          backgroundColor: '#A1DEC0',
-          margin: 10
-        }}>
-          <Text style={styles.message}> Treatment</Text>
-          <Text style={styles.message}>{plantObj.howToITreat}</Text>
-        </View>
-      </View>
+    <Container>
 
-      <View style={styles.buttonStyle}>
-        {/* react native button */}
-        <Button
-          title="Start Grow!"
-          onPress={() => {
-            // navigation.navigate('myPlants', {
-            //   plantObj:plantObj
-            // });
-
-            dispatch(addToMyPlants(plantObj))
-          }}
-        />
-
-        {/* <ToastType >
-          </ToastType> */}
-
-
-      </View>
-    </View>
+        <Content>
+          <Card style={{flex: 0,marginTop:10}}>
+            <CardItem style={{borderStyle:'solid',borderBottomColor:'#A1DEC0',borderBottomWidth:1}}>
+              <Left>
+                {/* <Thumbnail source={{uri: plantObj.imgUrl}} /> */}
+                <Body>
+                  <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>Treatment:</Text>
+                  <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>{plantObj.howToITreat}</Text>
+                </Body>
+              </Left>
+            </CardItem>
+            <CardItem style={{borderStyle:'solid',borderBottomColor:'#A1DEC0',borderBottomWidth:1}}>
+              <Body>
+                <Image source={{uri: plantObj.imgUrl }} style={{height: 350,width:'100%'}}/>
+              </Body>
+            </CardItem>
+            <CardItem>
+            <Left>
+                <Body>
+                  <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>Some words on it:</Text>
+                  <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>{plantObj.description}</Text>
+                </Body>
+              </Left>
+            </CardItem>
+            <CardItem style={{justifyContent:'center'}} >
+              <Button bordered onPress={() =>buttonEvent()}>
+            <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>Start Grow !</Text>
+          </Button>
+            </CardItem>
+          </Card>
+        </Content>
+      </Container>
   );
 };
 

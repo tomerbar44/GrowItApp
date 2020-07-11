@@ -1,6 +1,10 @@
 import React from 'react';
 import { object } from 'prop-types';
-import { FlatList, View, Text, StyleSheet, SafeAreaView } from 'react-native';
+// import { FlatList, View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { ProgressBar, Colors } from 'react-native-paper';
+
+import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text,Icon } from 'native-base';
+
 import styles from '../style/style';
 import { useSelector } from 'react-redux';
 
@@ -11,6 +15,7 @@ import { useSelector } from 'react-redux';
 //  */
 const myPlantsPage = ({ navigation }) => {
   // const { plantObj } = route.params;
+  // const myPlants = useSelector((state) => state.plantsReducer.myPlants)
   const myPlants = useSelector((state) => state.plantsReducer.myPlants)
   console.log('myPlants = ', myPlants)
 
@@ -29,13 +34,45 @@ const myPlantsPage = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container} >
-      <FlatList
-        data={myPlants}
-        renderItem={({ item }) => <Item name={item.name} />}
-        keyExtractor={item => item.id}
-      />
-    </View >
+    // <View style={styles.container} >
+    //   <FlatList
+    //     data={myPlants}
+    //     renderItem={({ item }) => <Item name={item.name} />}
+    //     keyExtractor={item => item.id}
+    //   />
+    // </View >
+    <Container>
+    <Content>
+      <List  
+        dataArray={myPlants}
+        renderRow={( item ) =>  
+        
+        <ListItem avatar>
+        <Left>
+          <Thumbnail  source={{uri:item.imgUrl}}/>
+        </Left>
+        <Body>
+          <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>{item.name}</Text>
+          <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>{item.description}</Text>
+          <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>Growth status</Text>
+          <ProgressBar progress={0.2} color={Colors.blue800} />
+        </Body>
+        <Right>
+          <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>Next irrigating</Text>
+         
+          <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>3:43</Text>
+        </Right>
+        <Right>
+        <Icon active name="trash" />
+        </Right>
+       
+      </ListItem> }
+      
+        keyExtractor={item => item.id} />
+       
+      {/* </List> */}
+    </Content>
+  </Container>
   );
 };
 

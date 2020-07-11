@@ -2,6 +2,8 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { object } from 'prop-types';
 import { FlatList, Text, View, ActivityIndicator, Button, TouchableOpacity, Image } from 'react-native';
+import { Container, Header, DeckSwiper, Card, CardItem, Thumbnail, Left, Body, Icon } from 'native-base';
+
 import * as actions from '../redux/actions/plantActions';
 import styles from '../style/style';
 import PlantItem from './PlantItem'
@@ -25,8 +27,9 @@ const PlantListSuggested = ({ route, navigation }) => {
 
   const fetchData = async () => {
     try {
-      // const { data } = await axios.get(`https://mobile-final-project-server.herokuapp.com/GrowIt/api/${buttonType}/${lat}/${lon}`)
-      const { data } = await axios.get(`http://10.0.2.2:3000/GrowIt/api/${buttonType}/${lat}/${lon}`)
+      const { data } = await axios.get(`https://mobile-final-project-server.herokuapp.com/GrowIt/api/${buttonType}/${lat}/${lon}`)
+      console.log(data,lat,lon)
+      // const { data } = await axios.get(`http://10.0.2.2:3000/GrowIt/api/${buttonType}/${lat}/${lon}`)
       dispatch(actions.setPlantList(data.dbresult))
       setIsLoading(false)
     } catch (error) {
@@ -65,12 +68,21 @@ const PlantListSuggested = ({ route, navigation }) => {
             <Text style={styles.message}>No Results were found 🙄</Text>
           </View>
         ) : (
-          <FlatList
-            key={2}
-            data={plantsList}
-            renderItem={({ item }) => (<PlantItem key={item._id} navigation={navigation} plantObj={item} />)}
-            keyExtractor={(item) => item._id}
-          />
+          // <FlatList
+          //   key={2}
+          //   data={plantsList}
+          //   renderItem={({ item }) => (<PlantItem key={item._id} navigation={navigation} plantObj={item} />)}
+          //   keyExtractor={(item) => item._id}
+          // />
+          <View style={{backgroundColor:"white",flex:1}}>
+          <DeckSwiper
+          dataSource={plantsList}
+          renderItem={item =>
+              <PlantItem key={item._id} navigation={navigation} plantObj={item} />
+          }
+        />
+        </View>
+
         )
   )
   

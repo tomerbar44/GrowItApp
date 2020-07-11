@@ -70,7 +70,7 @@ export const getGrowItTypes = () => (dispatch) => {
     fetch(url)
         .then((response) => response.json())
         .then((json) => {
-            // console.log('api json = ', json)
+            console.log('api json = ', json)
             dispatch({
                 type: PLANTS_TYPE_LOADED,
                 types: json.dbresult

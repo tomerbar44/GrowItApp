@@ -9,12 +9,18 @@ import PlantListSuggested from './src/components/PlantListSuggested';
 import PlantPage from './src/components/PlantPage'
 import myPlantsPage from './src/components/myPlantsPage'
 import store from './src/redux/store'
+import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
+import { AppLoading } from 'expo';
+import { Root } from "native-base";
+
 // import * as Location from 'expo-location'
 // import './src/localNotification'
 
 const Stack = createStackNavigator();
 
+
 const MyPlantsIcon = ({ navigation }) => {
+
   return (
     <Icon
       name="tree"
@@ -42,9 +48,15 @@ const MyPlantsIcon = ({ navigation }) => {
 export default function App() {
 
   // askPermissionFromUser().then(res => console.log(JSON.stringify(res.coords))).catch(e => console.log('e!!'))
+  let [fontsLoaded] = useFonts({
+    Comfortaa_600SemiBold,
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
   return (
     <Provider store={store}>
-
+      <Root>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -53,7 +65,8 @@ export default function App() {
             },
             headerTitleStyle: {
               fontSize: 30,
-              fontWeight: 'normal'
+              fontWeight: 'normal',
+              fontFamily:'Comfortaa_600SemiBold'
             },
           }}
         >
@@ -94,15 +107,36 @@ export default function App() {
           <Stack.Screen
             name="PlantPage"
             component={PlantPage}
-            options={({ route }) => ({ title: route.params.name, headerBackTitle: 'Back' })}
+            options={({ route }) => ({ title: route.params.plantObj.name, headerBackTitle: 'Back' })}
           />
           <Stack.Screen
             name="myPlantsPage"
             component={myPlantsPage}
-            // options={({ route }) => ({ title: route.params.name, headerBackTitle: 'Back' })}
+            options={({ route }) => ({ title: "My plants", headerBackTitle: 'Back' })}
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </Root>
     </Provider>
   );
+          }
 }
+
+
+// import React from 'react';
+
+// import { Text, View, TouchableOpacity, Image,FlatList } from 'react-native';
+
+// export default function App() {
+//   let [fontsLoaded] = useFonts({
+//     Comfortaa_600SemiBold,
+//   });
+
+//   if (!fontsLoaded) {
+//     return <Text>Inter Bl1ack</Text>;
+//   }
+
+//   return (
+//     <Text style={{ fontFamily: 'Comfortaa_600SemiBold' }}>Inter Black</Text>
+//   );
+// }
