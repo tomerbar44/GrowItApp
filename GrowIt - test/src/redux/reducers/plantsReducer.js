@@ -14,27 +14,8 @@ async function saveToMemory(plantToAdd) {
   }
 }
 
-// async function addNewPlantToMemory(plantToAdd) {
-//   try {
-//       const plants = await AsyncStorage.getItem('myPlants').then(data => JSON.parse(data))
-//       console.log('plants === ', plants)
-//       if (plants == null) {
-//           saveToMemory(JSON.stringify(plantToAdd))
-//       } else {
-//           console.log('plants more then one =>',plants)
-//           let allPlants = [...plants, plantToAdd]
-//           saveToMemory(JSON.stringify(allPlants))
-//       }
-
-//   } catch (error) {
-//       console.log(error.message)
-//   }
-// }
 
 
-
-
-// TODO - myPlants will get his state from Action that loads his state at main screen
 const initialState = {
   location: { lat: null, lon: null },
   plantsList: [],

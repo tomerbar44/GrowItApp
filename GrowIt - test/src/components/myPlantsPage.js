@@ -1,26 +1,37 @@
 import React from 'react';
 import { object } from 'prop-types';
 // import { FlatList, View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import CountDown from 'react-native-countdown-component';
 import { View } from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
 
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Icon } from 'native-base';
+import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from '../style/style';
 import { useSelector } from 'react-redux';
+import { TouchableOpacity } from 'react-native';
 
-// /**
-//  * 
-//  * have trouble to use myPlants Array as data for FlatList
-//  *  
-//  */
+
+const ClockComponent = () => {
+  return (
+    <CountDown
+      size={12}
+      until={604800}
+      onFinish={() => alert('Finished')}
+      digitStyle={{ backgroundColor: '#A1DEC0', borderWidth: 2, borderColor: 'transparent' }}
+      digitTxtStyle={{ color: '#666666' }}
+      timeLabelStyle={{ color: '#000000', fontWeight: 'bold' }}
+      separatorStyle={{ color: '#A1DEC0' }}
+      timeToShow={['D', 'H', 'M', 'S']}
+      timeLabels={{ d: 'D', h: 'H', m: "M", s: 'S' }}
+    // showSeparator
+    />
+  )
+}
+
 const myPlantsPage = ({ navigation }) => {
-  
-  // const { plantObj } = route.params;
-  // const myPlants = useSelector((state) => state.plantsReducer.myPlants)
-
   const myPlants = useSelector((state) => state.plantsReducer.myPlants)
-  // console.log('myPlants = ', myPlants)
 
   function Item({ name }) {
     return (
@@ -37,15 +48,7 @@ const myPlantsPage = ({ navigation }) => {
   }
 
   return (
-    // <View style={styles.container} >
-    //   <FlatList
-    //     data={myPlants}
-    //     renderItem={({ item }) => <Item name={item.name} />}
-    //     keyExtractor={item => item.id}
-    //   />
-    // </View >
     <View>
-
       <List
         dataArray={myPlants}
         renderRow={(item) =>
@@ -58,27 +61,32 @@ const myPlantsPage = ({ navigation }) => {
             </Left>
             <Body>
               {/* <Text>idddd: {item._id}</Text> */}
-              
+
               <Text style={{ fontFamily: 'Comfortaa_600SemiBold' }}>{item.name}</Text>
               <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>{item.description}</Text>
               <Text style={{ fontFamily: 'Comfortaa_600SemiBold' }}>Growth status</Text>
               <ProgressBar progress={0.2} color={Colors.blue800} />
             </Body>
-            <Right style={{flex:1, justifyContent:'space-around'}}>
+            <Right style={{ flex: 1, justifyContent: 'space-around' }}>
               <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>started {item.addedAt}</Text>
-              <View>
-              <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>Next irrigating</Text>
-              <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>3:43</Text>
+              <View style={{ alignItems: 'center' }}>
+                <TouchableOpacity
+                  onPress = {() => {
+                    console.log('irrigating!')
+                  }}
+                >
+
+                  <Icon name="water-pump" size={25} />
+                </TouchableOpacity>
+                <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>Next irrigating</Text>
+                {/* <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}></Text> */}
+                <ClockComponent />
 
               </View>
 
             </Right>
             <Right >
-              <View style={{marginTop:5}}>
-
-              <Icon active name="trash"  />
-              </View>
-              <Icon active name="water" />
+              {/* <Icon name="trash" /> */}
             </Right>
 
           </ListItem>
@@ -102,98 +110,25 @@ export default myPlantsPage;
 
 
 
-// import React from 'react';
-// import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
-// import Constants from 'expo-constants';
-
-// const DATA = [
-//   {
-//     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-//     title: 'First Item',
-//   },
-//   {
-//     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-//     title: 'Second Item',
-//   },
-//   {
-//     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-//     title: 'Third Item',
-//   },
-// ];
-
-// function Item({ title }) {
-//   return (
-//     <View style={styles.item}>
-//       <Text style={styles.title}>{title}</Text>
-//     </View>
-//   );
-// }
-
-// export default function App() {
-//   const myPlants = useSelector((state) => state.plantsReducer.myPlants)
-//   return (
-//     <SafeAreaView style={styless.container}>
-//       <FlatList
-//         data={myPlants}
-//         renderItem={({ item }) => <Item title={item.name} />}
-//         keyExtractor={item => item.id}
-//       />
-//     </SafeAreaView>
-//   );
-// }
-
-// const styless = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     marginTop: Constants.statusBarHeight,
-//   },
-//   item: {
-//     backgroundColor: '#f9c2ff',
-//     padding: 20,
-//     marginVertical: 8,
-//     marginHorizontal: 16,
-//   },
-//   title: {
-//     fontSize: 32,
-//   },
-// });
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  *
- *
- *         <FlatList
-          keyExtractor={(item) => item}
-          data={DATAAA}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.searchItem} key={Date.now()}>
-                <Text style={styles.message} keyExtractor={Date.now()}>
-                  {Date.now() + 1}.
-              </Text>
-                <Text style={styles.message} keyExtractor={Date.now()}>
-                  {' '}
-                  {item}
-                </Text>
-              </View>
-            );
-          }}
-          // ListEmptyComponent={() => (
-          //   <View>
-          //     <Text style={styles.message}>You havent already made a search. 🤷‍♂️</Text>
-          //   </View>
-          // )}
-        />
+ * import CountDown from 'react-native-countdown-component';
+
+render() {
+    return (
+      <CountDown
+        size={30}
+        until={1000}
+        onFinish={() => alert('Finished')}
+        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
+        digitTxtStyle={{color: '#1CC625'}}
+        timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
+        separatorStyle={{color: '#1CC625'}}
+        timeToShow={['H', 'M', 'S']}
+        timeLabels={{m: null, s: null}}
+        showSeparator
+      />
+    )
+}
  *
  */
-
