@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as Location from 'expo-location';
 import { AsyncStorage } from 'react-native';
 
-import { SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, PLANTS_LOADING, PLANTS_LOADED, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO } from './plantsTypes';
+import { SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, PLANTS_LOADING, PLANTS_LOADED, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO ,SET_MY_PLANTS_LIST} from './plantsTypes';
 
 
 function getHumanDate() {
@@ -45,7 +45,7 @@ async function fetchMemo() {
 export const addToMyPlants = (plant) => (dispatch) => {
     // Object.assign(plant, { _id: String(nextId()),  }) // to prevent same id when render MyPlants list 
     Object.assign(plant, { _id: String(plant._id + Date.now()), addedAt: getHumanDate() }) // to prevent same id when render MyPlants list 
-  
+    
     dispatch({
         type: ADD_PLANT_TO_LIST,
         plant: plant
@@ -103,6 +103,29 @@ export const saveOnDevice = () => (dispatch) => {
             })
         })
         .catch((e) => console.log('failed to save! = ', e.message))
+
+}
+
+export const removeFromDecive = (itemId) => (dispatch) => {
+
+
+        fetchMemo().then(data => {
+            data = data.filter(item => item._id !== itemId)
+                dispatch({
+                    type: SET_MY_PLANTS_LIST,
+                    updatedMyPlantsArray: data
+                })
+            
+        }).catch((e) => console.log('failed to remove! = ', e.message))
+        
+
+       
+        // console.log(JSON.parse(data))
+      
+    
+    
+
+    
 
 }
 

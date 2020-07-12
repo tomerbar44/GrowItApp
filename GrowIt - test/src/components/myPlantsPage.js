@@ -2,15 +2,15 @@ import React from 'react';
 import { object } from 'prop-types';
 // import { FlatList, View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import CountDown from 'react-native-countdown-component';
-import { View } from 'react-native';
+import { View,TouchableOpacity } from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
 
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base';
+import { Container, Header, List, ListItem, Left, Body, Right, Thumbnail, Text, Toast } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from '../style/style';
-import { useSelector } from 'react-redux';
-import { TouchableOpacity } from 'react-native';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import {removeFromDecive} from '../redux/actions/plantActions';
 
 
 const ClockComponent = () => {
@@ -33,19 +33,22 @@ const ClockComponent = () => {
 const myPlantsPage = ({ navigation }) => {
   const myPlants = useSelector((state) => state.plantsReducer.myPlants)
 
-  function Item({ name }) {
-    return (
-      <View key={Date.now()}>
-        <Text style={styles.message} keyExtractor={Date.now()}>
-          {Date.now() + 1}.
-  </Text>
-        <Text style={styles.message} keyExtractor={Date.now()}>
-          {' '}
-          {name}
-        </Text>
-      </View>
-    );
+  async function buttonEvent(plantObj) {
+    await dispatch(removeFromDecive(plantObj._id))
+    Toast.show({
+          text: `${plantObj.name} remove from your garden ! 🥳`,
+          textStyle: { fontFamily:'Comfortaa_600SemiBold'},
+          buttonText: "Okay",
+          buttonTextStyle: { fontFamily:'Comfortaa_600SemiBold',color:'blue'},
+          type: "success",
+          duration:2500,
+          // onClose()	{
+          //    navigation.push('Home')
+          //    navigation.navigate('myPlantsPage')
+          // }
+        })
   }
+  // console.log('myPlants = ', myPlants)
 
   return (
     <View>
@@ -86,7 +89,12 @@ const myPlantsPage = ({ navigation }) => {
 
             </Right>
             <Right >
-              {/* <Icon name="trash" /> */}
+              <View style={{marginTop:5}}>
+
+              <TouchableOpacity onPress={() =>buttonEvent(item)}>
+              <Icon active name="water"  />
+          </TouchableOpacity>
+              </View>
             </Right>
 
           </ListItem>
