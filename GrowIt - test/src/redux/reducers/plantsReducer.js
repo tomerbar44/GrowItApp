@@ -87,12 +87,11 @@ export default (state = initialState, action) => {
       }
 
     case ADD_PLANT_TO_LIST:
-      let p = [...state.myPlants, action.plant]
-      // console.log('p ====>', p)
-      saveToMemory(p)
+      let updatedMyPlantsArray = [...state.myPlants, action.plant]
+      saveToMemory(updatedMyPlantsArray)
       return {
         ...state,
-        myPlants: p
+        myPlants: updatedMyPlantsArray
       }
 
       case GET_PLANTS_FROM_MEMO:

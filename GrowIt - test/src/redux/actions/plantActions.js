@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as Location from 'expo-location';
 import { AsyncStorage } from 'react-native';
-import nextId from "react-id-generator";
 
 import { SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, PLANTS_LOADING, PLANTS_LOADED, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO } from './plantsTypes';
 
@@ -23,34 +22,8 @@ async function askPermissionFromUser() {
     return location
 }
 
-async function saveToMemory(plantsToSave) {
-    try {
-        await AsyncStorage.setItem('myPlants', plantsToSave)
 
-        console.log('saved on memory!@!')
 
-    } catch (error) {
-        console.log(error.message)
-    }
-}
-
-async function addNewPlantToMemory(plantToAdd) {
-    try {
-        const plants = await AsyncStorage.getItem('myPlants').then(data => JSON.parse(data))
-
-        if (plants == null) {
-            // console.log('plants === ', plants)
-            saveToMemory(JSON.stringify(plantToAdd))
-        } else {
-            // console.log('plants more then one =>',plants)
-            let allPlants = [...plants, plantToAdd]
-            saveToMemory(JSON.stringify(allPlants))
-        }
-
-    } catch (error) {
-        console.log(error.message)
-    }
-}
 
 async function fetchMemo() {
 
@@ -72,7 +45,7 @@ async function fetchMemo() {
 export const addToMyPlants = (plant) => (dispatch) => {
     // Object.assign(plant, { _id: String(nextId()),  }) // to prevent same id when render MyPlants list 
     Object.assign(plant, { _id: String(plant._id + Date.now()), addedAt: getHumanDate() }) // to prevent same id when render MyPlants list 
-    // addNewPlantToMemory(plant)
+  
     dispatch({
         type: ADD_PLANT_TO_LIST,
         plant: plant
