@@ -35,6 +35,7 @@ function PlantListSuggested ({ navigation, route }) {
           type: "success",
           duration:2500,
           onClose()	{
+             navigation.push('Home')
              navigation.navigate('myPlantsPage')
           }
         })

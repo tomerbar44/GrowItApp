@@ -1,33 +1,7 @@
-import { PLANTS_LOADED, PLANTS_LOADING, SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, ADD_PLANT_TO_LIST } from '../actions/plantsTypes';
-// import * as SecureStore from 'expo-secure-store';
+import { PLANTS_LOADED, PLANTS_LOADING, SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO } from '../actions/plantsTypes';
 import { AsyncStorage } from 'react-native';
 
-const bringDataFromMemory = () => {
-  let res = ''
 
-  const fetchMemo = async () => {
-
-    console.log('inside bringDataFromMemory!')
-    try {
-      const data = await AsyncStorage.getItem('myPlants').then(data => JSON.parse(data))
-      // console.log(JSON.parse(data))
-      return data
-    }
-    catch (e) {
-      console.log(e.message)
-    }
-  }
-
-
-  console.log('END inside bringDataFromMemory!')
-
-   fetchMemo().then(data => {
-    res = data
-  })
-  return res
-
-
-}
 
 
 async function saveToMemory(plantToAdd) {
@@ -71,7 +45,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log('bringDataFromMemory() -> ', bringDataFromMemory())
+  // console.log('bringDataFromMemory() -> ', bringDataFromMemory())
 
   switch (action.type) {
     case PLANTS_LOADING:
@@ -120,6 +94,12 @@ export default (state = initialState, action) => {
         ...state,
         myPlants: p
       }
+
+      case GET_PLANTS_FROM_MEMO:
+        return {
+          ...state,
+          myPlants: action.data
+        }
 
     default:
       return state;

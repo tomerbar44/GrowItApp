@@ -9,12 +9,6 @@ import styles from '../style/style';
 import PlantItem from './PlantItem'
 import axios from 'axios'
 
-const mapStateToProps = ({ plants }) => {
-  return {
-    plantsList: plants.plantsList,
-    isLoading: plants.isLoading
-  };
-};
 
 
 const PlantListSuggested = ({ route, navigation }) => {
@@ -28,7 +22,7 @@ const PlantListSuggested = ({ route, navigation }) => {
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`https://mobile-final-project-server.herokuapp.com/GrowIt/api/${buttonType}/${lat}/${lon}`)
-      console.log(data,lat,lon)
+      // console.log(data,lat,lon)
       // const { data } = await axios.get(`http://10.0.2.2:3000/GrowIt/api/${buttonType}/${lat}/${lon}`)
       dispatch(actions.setPlantList(data.dbresult))
       setIsLoading(false)

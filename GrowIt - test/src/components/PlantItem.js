@@ -3,6 +3,7 @@ import { object } from 'prop-types';
 import { TouchableOpacity, Image} from 'react-native';
 import { Card, CardItem, Thumbnail, Left, Body, Icon, Text, Header } from 'native-base';
 // import { useFonts, Comfortaa_300Light } from '@expo-google-fonts/comfortaa';
+// import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
 
 import styles from '../style/style';
 
@@ -10,13 +11,13 @@ import styles from '../style/style';
 
 function PlantItem({ plantObj,navigation }) {
   // let [fontsLoaded] = useFonts({
-  //   Comfortaa_300Light,
+  //   Comfortaa_600SemiBold,
   // });
   return (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('PlantPage', {
-          plantObj: plantObj
+          plantObj: {...plantObj}
         })
       }}
     > 

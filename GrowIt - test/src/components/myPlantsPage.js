@@ -1,9 +1,10 @@
 import React from 'react';
 import { object } from 'prop-types';
 // import { FlatList, View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
 
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text,Icon } from 'native-base';
+import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Icon } from 'native-base';
 
 import styles from '../style/style';
 import { useSelector } from 'react-redux';
@@ -14,10 +15,12 @@ import { useSelector } from 'react-redux';
 //  *  
 //  */
 const myPlantsPage = ({ navigation }) => {
+  
   // const { plantObj } = route.params;
   // const myPlants = useSelector((state) => state.plantsReducer.myPlants)
+
   const myPlants = useSelector((state) => state.plantsReducer.myPlants)
-  console.log('myPlants = ', myPlants)
+  // console.log('myPlants = ', myPlants)
 
   function Item({ name }) {
     return (
@@ -41,38 +44,53 @@ const myPlantsPage = ({ navigation }) => {
     //     keyExtractor={item => item.id}
     //   />
     // </View >
-    <Container>
-    <Content>
-      <List  
+    <View>
+
+      <List
         dataArray={myPlants}
-        renderRow={( item ) =>  
-        
-        <ListItem avatar>
-        <Left>
-          <Thumbnail  source={{uri:item.imgUrl}}/>
-        </Left>
-        <Body>
-          <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>{item.name}</Text>
-          <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>{item.description}</Text>
-          <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>Growth status</Text>
-          <ProgressBar progress={0.2} color={Colors.blue800} />
-        </Body>
-        <Right>
-          <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>Next irrigating</Text>
-         
-          <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>3:43</Text>
-        </Right>
-        <Right>
-        <Icon active name="trash" />
-        </Right>
-       
-      </ListItem> }
-      
-        keyExtractor={item => item.id} />
-       
+        renderRow={(item) =>
+
+          // <Container>
+          // <Content>
+          <ListItem avatar>
+            <Left>
+              <Thumbnail source={{ uri: item.imgUrl }} />
+            </Left>
+            <Body>
+              {/* <Text>idddd: {item._id}</Text> */}
+              
+              <Text style={{ fontFamily: 'Comfortaa_600SemiBold' }}>{item.name}</Text>
+              <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>{item.description}</Text>
+              <Text style={{ fontFamily: 'Comfortaa_600SemiBold' }}>Growth status</Text>
+              <ProgressBar progress={0.2} color={Colors.blue800} />
+            </Body>
+            <Right style={{flex:1, justifyContent:'space-around'}}>
+              <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>started {item.addedAt}</Text>
+              <View>
+              <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>Next irrigating</Text>
+              <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>3:43</Text>
+
+              </View>
+
+            </Right>
+            <Right >
+              <View style={{marginTop:5}}>
+
+              <Icon active name="trash"  />
+              </View>
+              <Icon active name="water" />
+            </Right>
+
+          </ListItem>
+          // </Content>
+          // </Container>
+        }
+
+        keyExtractor={(item) => item._id}
+      />
+
       {/* </List> */}
-    </Content>
-  </Container>
+    </View>
   );
 };
 

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+// import * as Font from 'expo-font';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,6 +11,7 @@ import PlantPage from './src/components/PlantPage'
 import myPlantsPage from './src/components/myPlantsPage'
 import store from './src/redux/store'
 import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
+
 import { AppLoading } from 'expo';
 import { Root } from "native-base";
 
@@ -46,13 +48,18 @@ const MyPlantsIcon = ({ navigation }) => {
 
 
 export default function App() {
+  
+
 
   // askPermissionFromUser().then(res => console.log(JSON.stringify(res.coords))).catch(e => console.log('e!!'))
   let [fontsLoaded] = useFonts({
     Comfortaa_600SemiBold,
+    Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+
   });
   if (!fontsLoaded) {
     return <AppLoading />;
+    // return <Text>blabla not loaded yet</Text>
   } else {
   return (
     <Provider store={store}>
