@@ -32,6 +32,7 @@ const ClockComponent = () => {
 
 const myPlantsPage = ({ navigation }) => {
   const myPlants = useSelector((state) => state.plantsReducer.myPlants)
+  const dispatch = useDispatch()
 
   async function buttonEvent(plantObj) {
     await dispatch(removeFromDecive(plantObj._id))
