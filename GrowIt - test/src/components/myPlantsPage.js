@@ -1,7 +1,7 @@
 import React from 'react';
 import { object } from 'prop-types';
 // import { FlatList, View, Text, StyleSheet, SafeAreaView } from 'react-native';
-import { View } from 'react-native';
+import { View,TouchableOpacity } from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
 
 import { Container, Header, Button, List, ListItem, Left, Body, Right, Thumbnail, Text, Icon,Toast } from 'native-base';
@@ -72,9 +72,9 @@ const myPlantsPage = ({ navigation }) => {
               <View style={{marginTop:5}}>
 
               
-              <Button bordered onPress={() =>buttonEvent(item)}>
+              <TouchableOpacity onPress={() =>buttonEvent(item)}>
               <Icon active name="trash"  />
-          </Button>
+          </TouchableOpacity>
               </View>
               <Icon active name="water" />
             </Right>
