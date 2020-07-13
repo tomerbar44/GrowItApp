@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from '../style/style';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { removeFromDecive, updatePlantIrrigateOnMemo } from '../redux/actions/plantActions';
+import { removeFromDevice, updatePlantIrrigateOnMemo } from '../redux/actions/plantActions';
 
 
 
@@ -64,7 +64,7 @@ const myPlantsPage = ({ navigation }) => {
   }
 
   async function removeButtonEvent(plantObj) {
-    await dispatch(removeFromDecive(plantObj._id))
+    await dispatch(removeFromDevice(plantObj._id))
     Toast.show({
       text: `${plantObj.name} remove from your garden ! 🥳`,
       textStyle: { fontFamily: 'Comfortaa_600SemiBold' },

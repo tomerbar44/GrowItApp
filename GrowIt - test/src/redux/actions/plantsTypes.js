@@ -1,10 +1,5 @@
 export const TEST = 'TEST';
-export const PLANTS_LOADED = 'PLANTS_LOADED';
-export const PLANTS_TYPE_LOADED = 'PLANTS_TYPE_LOADED';
-export const PLANTS_LOADING = 'PLANTS_LOADING';
-export const SET_LOCATION = 'SET_LOCATION'
-export const SET_VALUE = 'SET_VALUE'
 export const SET_PLANTS_LIST = 'SET_PLANTS_LIST'
 export const ADD_PLANT_TO_LIST = 'ADD_PLANT_TO_LIST'
-export const GET_PLANTS_FROM_MEMO = 'GET_PLANTS_FROM_MEMO'
 export const SET_MY_PLANTS_LIST = 'SET_MY_PLANTS_LIST'
+export const INIT_SYS = 'INIT_SYS'

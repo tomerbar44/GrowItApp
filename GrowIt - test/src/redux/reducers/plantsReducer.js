@@ -1,4 +1,4 @@
-import { PLANTS_LOADED, PLANTS_LOADING, SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO,SET_MY_PLANTS_LIST } from '../actions/plantsTypes';
+import {INIT_SYS, PLANTS_LOADED, PLANTS_LOADING, SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO,SET_MY_PLANTS_LIST } from '../actions/plantsTypes';
 import { AsyncStorage } from 'react-native';
 
 
@@ -88,6 +88,18 @@ export default (state = initialState, action) => {
           myPlants: action.data
         }
 
+
+        case INIT_SYS:
+          return{
+            ...state,
+            location: {
+              lat: action.lat,
+              lon: action.lon
+            },
+            types: action.types,
+            isLoading: false,
+            myPlants: action.data
+          }
     default:
       return state;
   }

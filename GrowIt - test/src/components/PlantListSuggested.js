@@ -8,6 +8,7 @@ import * as actions from '../redux/actions/plantActions';
 import styles from '../style/style';
 import PlantItem from './PlantItem'
 import axios from 'axios'
+import Loading from './Loading';
 
 
 
@@ -17,8 +18,8 @@ const PlantListSuggested = ({ route, navigation }) => {
   const { buttonType } = route.params;
   const { lat, lon } = useSelector((state) => state.plantsReducer.location);
   const plantsList = useSelector((state) => state.plantsReducer.plantsList)
-  // const isLoading = useSelector((state) => state.plantsReducer.isLoading)
 
+  
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`https://mobile-final-project-server.herokuapp.com/GrowIt/api/${buttonType}/${lat}/${lon}`)
@@ -32,8 +33,6 @@ const PlantListSuggested = ({ route, navigation }) => {
 
   }
 
-
-
   useEffect(() => {
     try {
       fetchData()
@@ -45,82 +44,28 @@ const PlantListSuggested = ({ route, navigation }) => {
   }, [])
 
 
-  // return isLoading ? (<Text> yes </Text>) : (<Text>  not loading </Text>)
-
-  // return isLoading ? (<Text> yes </Text>) : (
-  //   <View style={styles.container}>
-
-  {/* <Text> texting</Text> */ }
-
   return isLoading ? (
-    <View style={styles.activityIndator}>
-      <ActivityIndicator size="large" color="#0000ff" />
-    </View>
+    <Loading />
   ) : (
-    plantsList.length === 0 ? (
-          <View style={styles.activityIndator}>
-            <Text style={styles.message}>No Results were found 🙄</Text>
-          </View>
-        ) : (
-          // <FlatList
-          //   key={2}
-          //   data={plantsList}
-          //   renderItem={({ item }) => (<PlantItem key={item._id} navigation={navigation} plantObj={item} />)}
-          //   keyExtractor={(item) => item._id}
-          // />
-          <View style={{backgroundColor:"white",flex:1}}>
-          <DeckSwiper
-          dataSource={plantsList}
-          renderItem={item =>
-              <PlantItem key={item._id} navigation={navigation} plantObj={item} />
-          }
-        />
+      plantsList.length === 0 ? (
+        <View style={styles.activityIndator}>
+          <Text style={styles.message}>No Results were found 🙄</Text>
         </View>
-
+      ) : (
+          <View style={{ backgroundColor: "white", flex: 1 }}>
+            <DeckSwiper
+              dataSource={plantsList}
+              renderItem={item =>
+                <PlantItem key={item._id} navigation={navigation} plantObj={item} />
+              }
+            />
+          </View>
         )
-  )
-  
-  // {
-  //   plantsList.length === 0 ? (
-  //     <View style={styles.activityIndator}>
-  //       <Text style={styles.message}>No Results were found 🙄</Text>
-  //     </View>
-  //   ) : (
-  //     <FlatList
-  //       key={2}
-  //       data={plantsList}
-  //       renderItem={({ item }) => <PlantItem navigation={navigation} plantObj={item} />}
-  //       keyExtractor={(item) => item.id}
-  //     />
-  //   )
-  // }
+    )
 }
 
 
-{/* <FlatList
-        keyExtractor={(item) => item}
-        data={slicedArray}
-        renderItem={({ item, index }) => {
-          return (
-            <View style={styles.searchItem}>
-              <Text style={styles.message} keyExtractor={index}>
-                {index + 1}.
-              </Text>
-              <Text style={styles.message} keyExtractor={index}>
-                {' '}
-                {item}
-              </Text>
-            </View>
-          );
-        }}
-        ListEmptyComponent={() => (
-          <View>
-            <Text style={styles.message}>You havent already made a search. 🤷‍♂️</Text>
-          </View>
-        )}
-      /> */}
-  //   </View>
-  // );
+
 
 
 
