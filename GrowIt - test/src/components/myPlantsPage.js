@@ -4,7 +4,7 @@ import { object } from 'prop-types';
 import CountDown from 'react-native-countdown-component';
 import { View, TouchableOpacity } from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
-import {setNotification , cancelScheduledNotification} from '../localNotification'
+import { setNotification, cancelScheduledNotification } from '../localNotification'
 import { Container, Header, List, ListItem, Left, Body, Right, Thumbnail, Text, Toast } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -18,18 +18,17 @@ import { removeFromDecive, updatePlantIrrigateOnMemo } from '../redux/actions/pl
 const myPlantsPage = ({ navigation }) => {
   const dispatch = useDispatch()
   const myPlants = useSelector((state) => state.plantsReducer.myPlants)
-  const [state, setState] = useState(true)
 
 
   const ClockComponent = ({ countDownInSec }) => {
-    console.log('countDownInSec = ',countDownInSec)
+    console.log('countDownInSec = ', countDownInSec)
     return (
       <CountDown
         size={12}
         until={countDownInSec}
         onFinish={() => alert('done~')}
         digitStyle={{ backgroundColor: '#A1DEC0', borderWidth: 2, borderColor: 'transparent' }}
-        digitTxtStyle={{ color: '#666666', }}
+        digitTxtStyle={{ color: '#666666' }}
         timeLabelStyle={{ color: '#000000', fontWeight: 'bold' }}
         separatorStyle={{ color: '#A1DEC0' }}
         timeToShow={['D', 'H', 'M', 'S']}
@@ -40,23 +39,27 @@ const myPlantsPage = ({ navigation }) => {
   }
 
   async function addIrrigateButtonEvent(plantObj) {
-    // if (plantObj.nextIrrigate === undefined) {
-      const timeToIrrigate = (Date.now() / 1000) + Number(plantObj.waterAmount)
-      // const timeToIrrigate = (Date.now() / 1000) + 10
-      console.log('timeToIrrigate ->', timeToIrrigate)
-      setNotification(plantObj.name,'time to irrigate!', plantObj.imgUrl, /*Number(plantObj.waterAmount)*/ 10000  )
-      .then(id => console.log('Notification id =>', id)).catch(e => console.log('error =>', e))
-      Object.assign(plantObj, { nextIrrigate: timeToIrrigate })
-      await dispatch(updatePlantIrrigateOnMemo(plantObj))
 
-    // }
-    // else {
+    const timeToIrrigate = (Date.now() / 1000) + Number(plantObj.waterAmount)
+    if (plantObj.notificationId !== undefined) {
+      const prevNotificationId = plantObj.notificationId
+      cancelScheduledNotification(prevNotificationId)
+    }
 
-      // await dispatch(updatePlantIrrigateOnMemo(plantObj))
-    // }
+    setNotification(plantObj.name, 'time to irrigate!', plantObj.imgUrl, /*Number(plantObj.waterAmount)*/  30000 )
+      .then(async (notificationId) => {
+        console.log('Notification id =>', notificationId)
+        Object.assign(plantObj, { nextIrrigate: timeToIrrigate, notificationId: notificationId })
+        await dispatch(updatePlantIrrigateOnMemo(plantObj))
+      })
+      .catch(e => console.log('error =>', e))
 
-    // setCountDownInSec(Number(plantObj.waterAmount))
-    // console.log('plantObj -->', plantObj)
+
+
+
+    // console.log('yay')
+
+
 
   }
 
