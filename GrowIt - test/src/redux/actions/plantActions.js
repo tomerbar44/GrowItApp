@@ -2,13 +2,13 @@ import axios from 'axios';
 import * as Location from 'expo-location';
 import { AsyncStorage } from 'react-native';
 
-import { SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, PLANTS_LOADING, PLANTS_LOADED, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO ,SET_MY_PLANTS_LIST} from './plantsTypes';
+import { SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, PLANTS_LOADING, PLANTS_LOADED, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO, SET_MY_PLANTS_LIST } from './plantsTypes';
 
 
 function getHumanDate() {
     const date = new Date(Date.now())
-    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() 
-    
+    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()
+
 }
 
 async function askPermissionFromUser() {
@@ -21,9 +21,6 @@ async function askPermissionFromUser() {
 
     return location
 }
-
-
-
 
 async function fetchMemo() {
 
@@ -42,15 +39,7 @@ async function fetchMemo() {
 }
 
 
-export const addToMyPlants = (plant) => (dispatch) => {
-    // Object.assign(plant, { _id: String(nextId()),  }) // to prevent same id when render MyPlants list 
-    Object.assign(plant, { _id: String(plant._id + Date.now()), addedAt: getHumanDate() }) // to prevent same id when render MyPlants list 
-    
-    dispatch({
-        type: ADD_PLANT_TO_LIST,
-        plant: plant
-    })
-}
+
 
 export const setLocationAction = () => (dispatch) => {
     askPermissionFromUser()
@@ -88,46 +77,53 @@ export const getGrowItTypes = () => (dispatch) => {
             console.error(error);
         });
 
-
-
 }
 
 
-export const saveOnDevice = () => (dispatch) => {
-    AsyncStorage.setItem('testStoreKey', 'hahaha')
-        .then(() => {
-            // console.log('success to save!')
-            dispatch({
-                type: SET_VALUE,
-                storedVal: 'hahaha'
-            })
-        })
-        .catch((e) => console.log('failed to save! = ', e.message))
+export const addToMyPlants = (plant) => (dispatch) => {
+    // Object.assign(plant, { _id: String(nextId()),  }) // to prevent same id when render MyPlants list 
+    Object.assign(plant, { _id: String(plant._id + Date.now()), addedAt: getHumanDate() }) // to prevent same id when render MyPlants list 
 
+    dispatch({
+        type: ADD_PLANT_TO_LIST,
+        plant: plant
+    })
 }
 
 export const removeFromDecive = (itemId) => (dispatch) => {
+    fetchMemo().then(data => {
+        data = data.filter(item => item._id !== itemId)
+        dispatch({
+            type: SET_MY_PLANTS_LIST,
+            updatedMyPlantsArray: data
+        })
 
+    }).catch((e) => console.log('failed to remove! = ', e.message))
+}
 
-        fetchMemo().then(data => {
-            data = data.filter(item => item._id !== itemId)
-                dispatch({
-                    type: SET_MY_PLANTS_LIST,
-                    updatedMyPlantsArray: data
-                })
-            
-        }).catch((e) => console.log('failed to remove! = ', e.message))
-        
+export const updatePlantIrrigateOnMemo = (plant) => (dispatch) => {
+    fetchMemo().then(data => {
+        data = data.filter(item => item._id !== plant._id)
+        data = [...data, plant]
+        dispatch({
+            type: SET_MY_PLANTS_LIST,
+            updatedMyPlantsArray: data
+        })
 
-       
-        // console.log(JSON.parse(data))
-      
-    
-    
+    })
+}
 
-    
+export const getPlantsFromMemory = () => (dispatch) => {
+    fetchMemo().then(data => {
+        dispatch({
+            type: GET_PLANTS_FROM_MEMO,
+            data: data
+        })
+    })
 
 }
+
+
 
 export const setPlantList = (dbResult) => (dispatch) => {
     dispatch({
@@ -151,35 +147,3 @@ export const plantsLoaded = () => (dispatch) => {
     })
 }
 
-
-export const getPlantsFromMemory = () => (dispatch) => {
-    fetchMemo().then(data => {
-        dispatch({
-            type: GET_PLANTS_FROM_MEMO,
-            data: data
-        })
-    })
-
-}
-
-
-
-
-
-// askPermissionFromUser()
-//     .then((coordinates) => {
-//         // console.log(coordinates.coords)
-//         dispatch({
-//             type: SET_LOCATION,
-//             lat: coordinates.coords.latitude,
-//             lon: coordinates.coords.longitude
-//         })
-//     })
-//     .catch((e) => {
-//         console.log('e!!')
-//         dispatch({
-//             type: SET_LOCATION,
-//             lat: 'simulator lat',
-//             lon: 'simulator lon'
-//         })
-//     })

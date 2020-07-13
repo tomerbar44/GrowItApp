@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import * as Font from 'expo-font';
+import { Notifications } from 'expo';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,10 +17,15 @@ import { AppLoading } from 'expo';
 import { Root } from "native-base";
 
 // import * as Location from 'expo-location'
-// import './src/localNotification'
+
 
 const Stack = createStackNavigator();
 
+
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false, }),
+// }
+// );
 
 const MyPlantsIcon = ({ navigation }) => {
 
@@ -47,8 +53,9 @@ const MyPlantsIcon = ({ navigation }) => {
 }
 
 
+
 export default function App() {
-  
+
 
 
   // askPermissionFromUser().then(res => console.log(JSON.stringify(res.coords))).catch(e => console.log('e!!'))
@@ -61,72 +68,72 @@ export default function App() {
     return <AppLoading />;
     // return <Text>blabla not loaded yet</Text>
   } else {
-  return (
-    <Provider store={store}>
-      <Root>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: '#A1DEC0',
-            },
-            headerTitleStyle: {
-              fontSize: 30,
-              fontWeight: 'normal',
-              fontFamily:'Comfortaa_600SemiBold'
-            },
-          }}
-        >
-          <Stack.Screen
-            name="Home"
-            component={GrowItApp}
-            options={({navigation}) => ({
-              title: 'GrowIt',
-              headerRight: () => (
-                // <MyPlantsIcon />
-                <Icon
-                  name="tree"
-                  color="black"
-                  type='font-awesome'
-                  size={25}
-                  containerStyle={{ paddingRight: 20, paddingBottom: 5 }}
-                  onPress={() => navigation.navigate('myPlantsPage')}
-                // onPress={async () => {
-                //   // console.log('tal')
-                //   const res = await fetch('https://mobile-final-project-server.herokuapp.com/test', {
-                //     body:{
-                //       let:1,
-                //       lat:2
-                //     }
-                //   })
-                //   console.log('res = ', res)
-                // }}
-                />
-              ),
-            })}
+    return (
+      <Provider store={store}>
+        <Root>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: '#A1DEC0',
+                },
+                headerTitleStyle: {
+                  fontSize: 30,
+                  fontWeight: 'normal',
+                  fontFamily: 'Comfortaa_600SemiBold'
+                },
+              }}
+            >
+              <Stack.Screen
+                name="Home"
+                component={GrowItApp}
+                options={({ navigation }) => ({
+                  title: 'GrowIt',
+                  headerRight: () => (
+                    // <MyPlantsIcon />
+                    <Icon
+                      name="tree"
+                      color="black"
+                      type='font-awesome'
+                      size={25}
+                      containerStyle={{ paddingRight: 20, paddingBottom: 5 }}
+                      onPress={() => navigation.navigate('myPlantsPage')}
+                    // onPress={async () => {
+                    //   // console.log('tal')
+                    //   const res = await fetch('https://mobile-final-project-server.herokuapp.com/test', {
+                    //     body:{
+                    //       let:1,
+                    //       lat:2
+                    //     }
+                    //   })
+                    //   console.log('res = ', res)
+                    // }}
+                    />
+                  ),
+                })}
 
-          />
-          <Stack.Screen
-            name="PlantListSuggested"
-            component={PlantListSuggested}
-            options={{ title: 'You can grow', headerBackTitle: 'Back' }}
-          />
-          <Stack.Screen
-            name="PlantPage"
-            component={PlantPage}
-            options={({ route }) => ({ title: route.params.plantObj.name, headerBackTitle: 'Back' })}
-          />
-          <Stack.Screen
-            name="myPlantsPage"
-            component={myPlantsPage}
-            options={({ route }) => ({ title: "My plants", headerBackTitle: 'Back' })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      </Root>
-    </Provider>
-  );
-          }
+              />
+              <Stack.Screen
+                name="PlantListSuggested"
+                component={PlantListSuggested}
+                options={{ title: 'You can grow', headerBackTitle: 'Back' }}
+              />
+              <Stack.Screen
+                name="PlantPage"
+                component={PlantPage}
+                options={({ route }) => ({ title: route.params.plantObj.name, headerBackTitle: 'Back' })}
+              />
+              <Stack.Screen
+                name="myPlantsPage"
+                component={myPlantsPage}
+                options={({ route }) => ({ title: "My plants", headerBackTitle: 'Back' })}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Root>
+      </Provider>
+    );
+  }
 }
 
 

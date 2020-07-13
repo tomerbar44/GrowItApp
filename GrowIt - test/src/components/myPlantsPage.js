@@ -1,53 +1,79 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { object } from 'prop-types';
 // import { FlatList, View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import CountDown from 'react-native-countdown-component';
-import { View,TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
-
+import {setNotification , cancelScheduledNotification} from '../localNotification'
 import { Container, Header, List, ListItem, Left, Body, Right, Thumbnail, Text, Toast } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from '../style/style';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import {removeFromDecive} from '../redux/actions/plantActions';
+import { removeFromDecive, updatePlantIrrigateOnMemo } from '../redux/actions/plantActions';
 
 
-const ClockComponent = () => {
-  return (
-    <CountDown
-      size={12}
-      until={604800}
-      onFinish={() => alert('Finished')}
-      digitStyle={{ backgroundColor: '#A1DEC0', borderWidth: 2, borderColor: 'transparent' }}
-      digitTxtStyle={{ color: '#666666' }}
-      timeLabelStyle={{ color: '#000000', fontWeight: 'bold' }}
-      separatorStyle={{ color: '#A1DEC0' }}
-      timeToShow={['D', 'H', 'M', 'S']}
-      timeLabels={{ d: 'D', h: 'H', m: "M", s: 'S' }}
-    // showSeparator
-    />
-  )
-}
+
 
 const myPlantsPage = ({ navigation }) => {
-  const myPlants = useSelector((state) => state.plantsReducer.myPlants)
   const dispatch = useDispatch()
+  const myPlants = useSelector((state) => state.plantsReducer.myPlants)
+  const [state, setState] = useState(true)
 
-  async function buttonEvent(plantObj) {
+
+  const ClockComponent = ({ countDownInSec }) => {
+    console.log('countDownInSec = ',countDownInSec)
+    return (
+      <CountDown
+        size={12}
+        until={countDownInSec}
+        onFinish={() => alert('done~')}
+        digitStyle={{ backgroundColor: '#A1DEC0', borderWidth: 2, borderColor: 'transparent' }}
+        digitTxtStyle={{ color: '#666666', }}
+        timeLabelStyle={{ color: '#000000', fontWeight: 'bold' }}
+        separatorStyle={{ color: '#A1DEC0' }}
+        timeToShow={['D', 'H', 'M', 'S']}
+        timeLabels={{ d: 'D', h: 'H', m: "M", s: 'S' }}
+      // showSeparator
+      />
+    )
+  }
+
+  async function addIrrigateButtonEvent(plantObj) {
+    // if (plantObj.nextIrrigate === undefined) {
+      const timeToIrrigate = (Date.now() / 1000) + Number(plantObj.waterAmount)
+      // const timeToIrrigate = (Date.now() / 1000) + 10
+      console.log('timeToIrrigate ->', timeToIrrigate)
+      setNotification(plantObj.name,'time to irrigate!', plantObj.imgUrl, /*Number(plantObj.waterAmount)*/ 10000  )
+      .then(id => console.log('Notification id =>', id)).catch(e => console.log('error =>', e))
+      Object.assign(plantObj, { nextIrrigate: timeToIrrigate })
+      await dispatch(updatePlantIrrigateOnMemo(plantObj))
+
+    // }
+    // else {
+
+      // await dispatch(updatePlantIrrigateOnMemo(plantObj))
+    // }
+
+    // setCountDownInSec(Number(plantObj.waterAmount))
+    // console.log('plantObj -->', plantObj)
+
+  }
+
+  async function removeButtonEvent(plantObj) {
     await dispatch(removeFromDecive(plantObj._id))
     Toast.show({
-          text: `${plantObj.name} remove from your garden ! 🥳`,
-          textStyle: { fontFamily:'Comfortaa_600SemiBold'},
-          buttonText: "Okay",
-          buttonTextStyle: { fontFamily:'Comfortaa_600SemiBold',color:'blue'},
-          type: "success",
-          duration:2500,
-          // onClose()	{
-          //    navigation.push('Home')
-          //    navigation.navigate('myPlantsPage')
-          // }
-        })
+      text: `${plantObj.name} remove from your garden ! 🥳`,
+      textStyle: { fontFamily: 'Comfortaa_600SemiBold' },
+      buttonText: "Okay",
+      buttonTextStyle: { fontFamily: 'Comfortaa_600SemiBold', color: 'blue' },
+      type: "success",
+      duration: 2500,
+      // onClose()	{
+      //    navigation.push('Home')
+      //    navigation.navigate('myPlantsPage')
+      // }
+    })
   }
   // console.log('myPlants = ', myPlants)
 
@@ -75,8 +101,8 @@ const myPlantsPage = ({ navigation }) => {
               <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>started {item.addedAt}</Text>
               <View style={{ alignItems: 'center' }}>
                 <TouchableOpacity
-                  onPress = {() => {
-                    console.log('irrigating!')
+                  onPress={() => {
+                    addIrrigateButtonEvent(item)
                   }}
                 >
 
@@ -84,17 +110,21 @@ const myPlantsPage = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}>Next irrigating</Text>
                 {/* <Text note style={{ fontFamily: 'Comfortaa_600SemiBold' }}></Text> */}
-                <ClockComponent />
+
+                {/* {item.nextIrrigate !== undefined ? <ClockComponent countDownInSec={item.nextIrrigate  - Date.now() } /> : null} */}
+                {item.nextIrrigate !== undefined ? <ClockComponent countDownInSec={item.nextIrrigate - (Date.now() / 1000)} /> : null}
+
+
 
               </View>
 
             </Right>
             <Right >
-              <View style={{marginTop:5}}>
+              <View style={{ marginTop: 5 }}>
 
-              <TouchableOpacity onPress={() =>buttonEvent(item)}>
-              <Icon active name="water"  />
-          </TouchableOpacity>
+                <TouchableOpacity onPress={() => removeButtonEvent(item)}>
+                  <Icon active name="water" />
+                </TouchableOpacity>
               </View>
             </Right>
 
@@ -117,27 +147,3 @@ myPlantsPage.propTypes = {
 
 export default myPlantsPage;
 
-
-
-/**
- *
- * import CountDown from 'react-native-countdown-component';
-
-render() {
-    return (
-      <CountDown
-        size={30}
-        until={1000}
-        onFinish={() => alert('Finished')}
-        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
-        digitTxtStyle={{color: '#1CC625'}}
-        timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
-        separatorStyle={{color: '#1CC625'}}
-        timeToShow={['H', 'M', 'S']}
-        timeLabels={{m: null, s: null}}
-        showSeparator
-      />
-    )
-}
- *
- */
