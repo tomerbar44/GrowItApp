@@ -12,14 +12,13 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderStyle: 'dashed',
     borderColor: '#A1DEC0',
-    justifyContent:'center',
-    alignItems:'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   txtStyle: {
     fontSize: 18,
     padding: 5,
-    fontFamily: 'Comfortaa_600SemiBold',
-    
+    fontFamily: 'Comfortaa_600SemiBold'
   },
   cardStyle: {
     borderStyle: 'solid',

@@ -10,7 +10,7 @@ function PlantItem({ plantObj, navigation }) {
       onPress={() => {
         navigation.navigate('PlantPage', {
           plantObj: { ...plantObj },
-          buttonFlag :true
+          buttonFlag: true
         });
       }}
     >

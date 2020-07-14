@@ -25,32 +25,32 @@ const myPlantsPage = ({ navigation }) => {
             <Left>
               <Thumbnail source={{ uri: item.imgUrl }} />
             </Left>
-            
+
             <Body>
-            <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('PlantPage', {
-          plantObj: { ...item },
-          buttonFlag:false
-        });
-      }}
-    >
-              <Text style={styles.font}>{item.name}</Text>
-              <Text note style={styles.font}>
-                Click for info
-              </Text>
-              <Text style={styles.font}>Growth status</Text>
-              <ProgressBar
-                progress={item.nextIrrigate ? processPart(item) : 0}
-                color={Colors.blue800}
-              />
-              {item.nextIrrigate ? <Text style={styles.font}>Next irrigating</Text> : null}
-              {item.nextIrrigate ? (
-                <ClockComponent countDownInSec={item.nextIrrigate - Date.now() / 1000} />
-              ) : null}
-               </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('PlantPage', {
+                    plantObj: { ...item },
+                    buttonFlag: false
+                  });
+                }}
+              >
+                <Text style={styles.font}>{item.name}</Text>
+                <Text note style={styles.font}>
+                  Click for info
+                </Text>
+                <Text style={styles.font}>Growth status</Text>
+                <ProgressBar
+                  progress={item.nextIrrigate ? processPart(item) : 0}
+                  color={Colors.blue800}
+                />
+                {item.nextIrrigate ? <Text style={styles.font}>Next irrigating</Text> : null}
+                {item.nextIrrigate ? (
+                  <ClockComponent countDownInSec={item.nextIrrigate - Date.now() / 1000} />
+                ) : null}
+              </TouchableOpacity>
             </Body>
-           
+
             <Right>
               <Text note style={styles.font}>
                 Added at {item.addedAt}

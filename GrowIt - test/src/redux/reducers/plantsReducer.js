@@ -9,7 +9,6 @@ import { AsyncStorage } from 'react-native';
 async function saveToMemory(plantToAdd) {
   try {
     await AsyncStorage.setItem('myPlants', JSON.stringify(plantToAdd));
-    console.log('saved on memory!@!');
   } catch (error) {
     console.log(error.message);
   }
@@ -27,18 +26,18 @@ export default (state = initialState, action) => {
     case SET_PLANTS_LIST:
       return {
         ...state,
-        plantsList: action.plantsList,
+        plantsList: action.plantsList
       };
 
     case ADD_PLANT_TO_LIST:
-      saveToMemory([...state.myPlants, action.plant]);
+      if (action.key !== 'testKey') saveToMemory([...state.myPlants, action.plant]);
       return {
         ...state,
         myPlants: [...state.myPlants, action.plant]
       };
 
     case SET_MY_PLANTS_LIST:
-      saveToMemory(action.updatedMyPlantsArray);
+      if (action.key !== 'testKey') saveToMemory(action.updatedMyPlantsArray);
       return {
         ...state,
         myPlants: action.updatedMyPlantsArray
@@ -52,7 +51,6 @@ export default (state = initialState, action) => {
           lon: action.lon
         },
         types: action.types,
-        isLoading: false,
         myPlants: action.data
       };
     default:

@@ -15,7 +15,7 @@ import store from './src/redux/store';
 import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
 import { AppLoading } from 'expo';
 import { Root } from 'native-base';
-import { StyleSheet ,Text ,View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -50,16 +50,16 @@ export default function App() {
                 title: 'GrowIt',
                 headerRight() {
                   return (
-                    <View style={styles.header}>                   
+                    <View style={styles.header}>
                       <Icon
-                      name="tree-outline"
-                      color="yellow"
-                      size={35}
-                      style={styles.icon}
-                      onPress={() => navigation.navigate('myPlantsPage')}
-                    />
-                    <Text style={styles.text}>My plants</Text>
-                    </View> 
+                        name="tree-outline"
+                        color="yellow"
+                        size={35}
+                        style={styles.icon}
+                        onPress={() => navigation.navigate('myPlantsPage')}
+                      />
+                      <Text style={styles.text}>My plants</Text>
+                    </View>
                   );
                 }
               })}
@@ -91,15 +91,15 @@ export default function App() {
 
 const styles = StyleSheet.create({
   header: {
-    marginRight:15,
-    marginBottom:5 
+    marginRight: 15,
+    marginBottom: 5
   },
-  icon:{
-    marginLeft:8
+  icon: {
+    marginLeft: 8
   },
-  text:{
+  text: {
     fontFamily: 'Comfortaa_600SemiBold',
-    fontSize:10,
-    color:'grey'
+    fontSize: 10,
+    color: 'grey'
   }
 });
