@@ -2,7 +2,12 @@ import axios from 'axios';
 import * as Location from 'expo-location';
 import { AsyncStorage } from 'react-native';
 
-import { SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, PLANTS_LOADING, PLANTS_LOADED, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO, SET_MY_PLANTS_LIST } from './plantsTypes';
+import {
+    INIT_SYS,
+    SET_PLANTS_LIST,
+    ADD_PLANT_TO_LIST,
+    SET_MY_PLANTS_LIST
+} from './plantsTypes';
 
 
 function getHumanDate() {
@@ -39,45 +44,41 @@ async function fetchMemo() {
 }
 
 
+export const initSystem = () => (dispatch) => {
+    const getTypesURL = `https://mobile-final-project-server.herokuapp.com/GrowIt/api/type`;
+    async function init() {
+        try {
+            const response = await fetch(getTypesURL).then(res => res.json())
+            const memoInit = await fetchMemo()
+            const coordinates = await askPermissionFromUser().catch(() => {
+                return ({ coords: { latitude: '30', longitude: '30' } })
+            })
 
-
-export const setLocationAction = () => (dispatch) => {
-    askPermissionFromUser()
-        .then((coordinates) => {
-            // console.log(coordinates.coords)
+            console.log('coordinates =>>', coordinates)
             dispatch({
-                type: SET_LOCATION,
+                type: INIT_SYS,
                 lat: coordinates.coords.latitude,
-                lon: coordinates.coords.longitude
+                lon: coordinates.coords.longitude,
+                types: response.dbresult,
+                data: memoInit
             })
-        })
-        .catch((e) => {
-            console.log('e!!')
+
+        } catch (e) {
+            console.log('e ->', e)
             dispatch({
-                type: SET_LOCATION,
+                type: INIT_SYS,
                 lat: '30',
-                lon: '30'
+                lon: '30',
+                types: [],
+                data: []
             })
-        })
+        }
+    }
+    init().then(() => {
+        return;
+    })
 }
 
-export const getGrowItTypes = () => (dispatch) => {
-
-    const url = `https://mobile-final-project-server.herokuapp.com/GrowIt/api/type`;
-    fetch(url)
-        .then((response) => response.json())
-        .then((json) => {
-            // console.log('api json = ', json)
-            dispatch({
-                type: PLANTS_TYPE_LOADED,
-                types: json.dbresult
-            });
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-
-}
 
 
 export const addToMyPlants = (plant) => (dispatch) => {
@@ -90,7 +91,7 @@ export const addToMyPlants = (plant) => (dispatch) => {
     })
 }
 
-export const removeFromDecive = (itemId) => (dispatch) => {
+export const removeFromDevice = (itemId) => (dispatch) => {
     fetchMemo().then(data => {
         data = data.filter(item => item._id !== itemId)
         dispatch({
@@ -113,16 +114,6 @@ export const updatePlantIrrigateOnMemo = (plant) => (dispatch) => {
     })
 }
 
-export const getPlantsFromMemory = () => (dispatch) => {
-    fetchMemo().then(data => {
-        dispatch({
-            type: GET_PLANTS_FROM_MEMO,
-            data: data
-        })
-    })
-
-}
-
 
 
 export const setPlantList = (dbResult) => (dispatch) => {
@@ -133,17 +124,4 @@ export const setPlantList = (dbResult) => (dispatch) => {
 
 }
 
-export const plantsLoading = () => (dispatch) => {
-    // console.log('inside plantsLoading!')
-    dispatch({
-        type: PLANTS_LOADING
-    })
-}
-
-export const plantsLoaded = () => (dispatch) => {
-    // console.log('inside plantsLoaded!')
-    dispatch({
-        type: PLANTS_LOADED
-    })
-}
 
