@@ -1,14 +1,8 @@
 import {
-  INIT_SYS,
-  PLANTS_LOADED,
-  PLANTS_LOADING,
-  SET_LOCATION,
-  SET_VALUE,
-  PLANTS_TYPE_LOADED,
   SET_PLANTS_LIST,
+  SET_MY_PLANTS_LIST,
   ADD_PLANT_TO_LIST,
-  GET_PLANTS_FROM_MEMO,
-  SET_MY_PLANTS_LIST
+  INIT_SYS
 } from '../actions/plantsTypes';
 import { AsyncStorage } from 'react-native';
 
@@ -25,46 +19,13 @@ const initialState = {
   location: { lat: null, lon: null },
   plantsList: [],
   types: [],
-  isLoading: false,
   storedVal: 'default value',
   myPlants: [] // the init is to bring from memory the former plants
 };
 
 export default (state = initialState, action) => {
-  // console.log('bringDataFromMemory() -> ', bringDataFromMemory())
-
   switch (action.type) {
-    case PLANTS_LOADING:
-      return {
-        ...state,
-        isLoading: true
-      };
-
-    case PLANTS_TYPE_LOADED:
-      return {
-        ...state,
-        types: action.types,
-        isLoading: false
-      };
-
-    case SET_LOCATION:
-      // console.log('action = ', action)
-      return {
-        ...state,
-        location: {
-          lat: action.lat,
-          lon: action.lon
-        }
-      };
-
-    case SET_VALUE:
-      return {
-        ...state,
-        storedVal: action.storedVal
-      };
-
     case SET_PLANTS_LIST:
-      // console.log('action.plantsList = ', action.plantsList)
       return {
         ...state,
         plantsList: action.plantsList,
@@ -72,11 +33,11 @@ export default (state = initialState, action) => {
       };
 
     case ADD_PLANT_TO_LIST:
-      const updatedMyPlantsArray = [...state.myPlants, action.plant];
-      saveToMemory(updatedMyPlantsArray);
+      // const updatedMyPlantsArray = [...state.myPlants, action.plant];
+      saveToMemory([...state.myPlants, action.plant]);
       return {
         ...state,
-        myPlants: updatedMyPlantsArray
+        myPlants: [...state.myPlants, action.plant]
       };
 
     case SET_MY_PLANTS_LIST:
@@ -84,12 +45,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         myPlants: action.updatedMyPlantsArray
-      };
-
-    case GET_PLANTS_FROM_MEMO:
-      return {
-        ...state,
-        myPlants: action.data
       };
 
     case INIT_SYS:

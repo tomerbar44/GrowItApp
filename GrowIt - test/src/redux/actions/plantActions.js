@@ -3,7 +3,6 @@ import { AsyncStorage } from 'react-native';
 import { Toast } from 'native-base';
 import { setNotification, cancelScheduledNotification } from '../../localNotification';
 import { INIT_SYS, SET_PLANTS_LIST, ADD_PLANT_TO_LIST, SET_MY_PLANTS_LIST } from './plantsTypes';
-import { removeNotificationSubscription } from 'expo-notifications';
 
 function getHumanDate() {
   const date = new Date(Date.now());
@@ -110,7 +109,7 @@ export const irrigatePlantAndUpdate = (plant) => (dispatch) => {
 };
 
 export const removeFromDevice = (plant) => (dispatch) => {
-  if (plant.notificationId != undefined) {
+  if (plant.notificationId !== undefined) {
     cancelScheduledNotification(plant.notificationId);
     console.log('plant.notificationId removed! ->', plant.notificationId);
   }

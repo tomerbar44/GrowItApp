@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Text, TouchableHighlight, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { removeFromDevice } from '../../redux/actions/plantActions';
@@ -36,6 +37,11 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
       </Modal>
     </View>
   );
+};
+
+ModalComponent.propTypes = {
+  plantObj: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default ModalComponent;

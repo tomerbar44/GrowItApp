@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { TouchableOpacity, Image } from 'react-native';
-import { Card, CardItem, Thumbnail, Left, Body, Icon, Text, Header } from 'native-base';
+import { Card, CardItem, Thumbnail, Left, Body, Icon, Text } from 'native-base';
 import styles from './style';
 
 function PlantItem({ plantObj, navigation }) {
@@ -52,7 +52,8 @@ function PlantItem({ plantObj, navigation }) {
 }
 
 PlantItem.propTypes = {
-  plantObj: object
+  plantObj: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default PlantItem;

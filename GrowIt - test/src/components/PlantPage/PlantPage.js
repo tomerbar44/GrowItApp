@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { object } from 'prop-types';
+
 import { Image } from 'react-native';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body, Toast } from 'native-base';
 import { addToMyPlants } from '../../redux/actions/plantActions';
@@ -70,7 +71,8 @@ function PlantPage({ navigation, route }) {
 }
 
 PlantPage.propTypes = {
-  route: object
+  route: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default PlantPage;

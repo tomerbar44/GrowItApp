@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Text, View } from 'react-native';
 import { DeckSwiper } from 'native-base';
 import { setPlantList } from '../../redux/actions/plantActions';
@@ -53,7 +53,8 @@ const PlantListSuggested = ({ route, navigation }) => {
 };
 
 PlantListSuggested.propTypes = {
-  route: object
+  route: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default PlantListSuggested;

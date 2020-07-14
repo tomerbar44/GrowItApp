@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { View, TouchableOpacity } from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
-import CountDown from 'react-native-countdown-component';
+import { CountDown } from 'react-native-countdown-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { irrigatePlantAndUpdate } from '../../redux/actions/plantActions';
-import { List, ListItem, Left, Body, Right, Thumbnail, Text, Toast } from 'native-base';
+import { List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ModalComponent from '../Modal/Modal';
 import styles from './style';
@@ -66,7 +66,7 @@ const myPlantsPage = () => {
         )}
         keyExtractor={(item) => item._id}
         ListEmptyComponent={
-          <Text style={[styles.font, styles.emptyList]}>You don't have plants yet 🤷‍♂️</Text>
+          <Text style={[styles.font, styles.emptyList]}>You dont have plants yet 🤷‍♂️</Text>
         }
       />
     </View>
@@ -77,13 +77,12 @@ const ClockComponent = ({ countDownInSec }) => {
   return (
     <CountDown
       size={11}
-      style={{ paddingRight: 75, paddingTop: 5 }}
+      style={styles.clock}
       until={countDownInSec}
-      onFinish={() => alert('Time to irrigate is over!')}
-      digitStyle={{ backgroundColor: '#A1DEC0', borderWidth: 2, borderColor: 'transparent' }}
-      digitTxtStyle={{ color: '#666666' }}
-      timeLabelStyle={{ color: '#000000', fontWeight: 'bold', textAlign: 'left' }}
-      separatorStyle={{ color: '#A1DEC0' }}
+      digitStyle={styles.clockDigitStyle}
+      digitTxtStyle={styles.clockDigitTxtStyle}
+      timeLabelStyle={styles.clockTimeLabelStyle}
+      separatorStyle={styles.clockSeparatorStyle}
       timeToShow={['D', 'H', 'M', 'S']}
       timeLabels={{ d: 'D', h: 'H', m: 'M', s: 'S' }}
     />
@@ -94,8 +93,8 @@ const processPart = (item) => {
   return (Date.now() / 1000 - (item.nextIrrigate - item.waterAmount)) / item.waterAmount;
 };
 
-myPlantsPage.propTypes = {
-  // route: object
+ClockComponent.propTypes = {
+  countDownInSec: PropTypes.number
 };
 
 export default myPlantsPage;
