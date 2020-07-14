@@ -9,7 +9,8 @@ function PlantItem({ plantObj, navigation }) {
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('PlantPage', {
-          plantObj: { ...plantObj }
+          plantObj: { ...plantObj },
+          buttonFlag :true
         });
       }}
     >

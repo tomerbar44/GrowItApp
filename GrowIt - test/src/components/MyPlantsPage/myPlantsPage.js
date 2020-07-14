@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ModalComponent from '../Modal/Modal';
 import styles from './style';
 
-const myPlantsPage = () => {
+const myPlantsPage = ({ navigation }) => {
   const dispatch = useDispatch();
   const myPlants = useSelector((state) => state.plantsReducer.myPlants);
   const [modalVisible, setModalVisible] = useState({ flag: false, obj: {} });
@@ -25,10 +25,19 @@ const myPlantsPage = () => {
             <Left>
               <Thumbnail source={{ uri: item.imgUrl }} />
             </Left>
+            
             <Body>
+            <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('PlantPage', {
+          plantObj: { ...item },
+          buttonFlag:false
+        });
+      }}
+    >
               <Text style={styles.font}>{item.name}</Text>
               <Text note style={styles.font}>
-                {item.description}
+                Click for info
               </Text>
               <Text style={styles.font}>Growth status</Text>
               <ProgressBar
@@ -39,7 +48,9 @@ const myPlantsPage = () => {
               {item.nextIrrigate ? (
                 <ClockComponent countDownInSec={item.nextIrrigate - Date.now() / 1000} />
               ) : null}
+               </TouchableOpacity>
             </Body>
+           
             <Right>
               <Text note style={styles.font}>
                 Added at {item.addedAt}

@@ -8,7 +8,7 @@ import { addToMyPlants } from '../../redux/actions/plantActions';
 import styles from './style';
 
 function PlantPage({ navigation, route }) {
-  const { plantObj } = route.params;
+  const { plantObj ,buttonFlag } = route.params;
   const dispatch = useDispatch();
 
   async function buttonEvent() {
@@ -59,11 +59,11 @@ function PlantPage({ navigation, route }) {
               </Body>
             </Left>
           </CardItem>
-          <CardItem style={styles.justify}>
+         {buttonFlag ? (<CardItem style={styles.justify}>
             <Button bordered onPress={() => buttonEvent()}>
               <Text style={styles.font}>Start Grow !</Text>
             </Button>
-          </CardItem>
+          </CardItem>): null} 
         </Card>
       </Content>
     </Container>

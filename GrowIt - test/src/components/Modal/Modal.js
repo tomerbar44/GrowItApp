@@ -40,7 +40,7 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
 };
 
 ModalComponent.propTypes = {
-  modalVisible: PropTypes.func,
+  modalVisible: PropTypes.object,
   setModalVisible: PropTypes.func
 };
 

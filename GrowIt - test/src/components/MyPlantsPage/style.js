@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   font: {
-    fontFamily: 'Comfortaa_600SemiBold'
+    fontFamily: 'Comfortaa_600SemiBold',
   },
   emptyList: {
     fontSize: 22,

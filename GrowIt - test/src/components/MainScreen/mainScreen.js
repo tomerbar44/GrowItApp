@@ -17,8 +17,9 @@ const GrowItApp = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.sloganContainer}>
-        <Text style={styles.txtStyle}> Hi, We are GrowIt ! 💪🏼</Text>
-        <Text style={styles.txtStyle}> We will provide you the right plants for your area. 😀</Text>
+        <Text style={styles.txtStyle}>Hi, We are GrowIt ! 💪🏼</Text>
+        <Text style={styles.txtStyle}>We will provide you the right</Text>
+        <Text style={styles.txtStyle}>plants for your area.</Text>
       </View>
       {types.length === 0 ? (
         <Loading />

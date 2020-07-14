@@ -4,7 +4,8 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Icon } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { Provider } from 'react-redux';
 import GrowItApp from './src/components/MainScreen/mainScreen';
 import PlantListSuggested from './src/components/PlantsListSuggested/PlantListSuggested';
@@ -14,7 +15,7 @@ import store from './src/redux/store';
 import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
 import { AppLoading } from 'expo';
 import { Root } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { StyleSheet ,Text ,View} from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -49,14 +50,16 @@ export default function App() {
                 title: 'GrowIt',
                 headerRight() {
                   return (
-                    <Icon
-                      name="tree"
-                      color="black"
-                      type="font-awesome"
-                      size={25}
-                      containerStyle={styles.header}
+                    <View style={styles.header}>                   
+                      <Icon
+                      name="tree-outline"
+                      color="yellow"
+                      size={35}
+                      style={styles.icon}
                       onPress={() => navigation.navigate('myPlantsPage')}
                     />
+                    <Text style={styles.text}>My plants</Text>
+                    </View> 
                   );
                 }
               })}
@@ -88,7 +91,15 @@ export default function App() {
 
 const styles = StyleSheet.create({
   header: {
-    paddingRight: 20,
-    paddingBottom: 5
+    marginRight:15,
+    marginBottom:5 
+  },
+  icon:{
+    marginLeft:8
+  },
+  text:{
+    fontFamily: 'Comfortaa_600SemiBold',
+    fontSize:10,
+    color:'grey'
   }
 });

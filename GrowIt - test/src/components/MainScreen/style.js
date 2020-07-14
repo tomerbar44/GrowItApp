@@ -7,16 +7,19 @@ const styles = StyleSheet.create({
   },
   sloganContainer: {
     margin: 10,
-    height: '15%',
+    height: '18%',
     borderWidth: 2,
     borderRadius: 2,
     borderStyle: 'dashed',
-    borderColor: '#A1DEC0'
+    borderColor: '#A1DEC0',
+    justifyContent:'center',
+    alignItems:'center'
   },
   txtStyle: {
-    fontSize: 20,
+    fontSize: 18,
     padding: 5,
-    fontFamily: 'Comfortaa_600SemiBold'
+    fontFamily: 'Comfortaa_600SemiBold',
+    
   },
   cardStyle: {
     borderStyle: 'solid',
