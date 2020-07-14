@@ -16,7 +16,7 @@ const GrowItApp = ({ navigation }) => {
   const types = useSelector((state) => state.plantsReducer.types)
   return (
     <View style={styles.container}>
-      <View style={styles.slogenContainer}>
+      <View style={styles.sloganContainer}>
         <Text style={styles.txtStyle}> Hi, We are GrowIt ! 💪🏼</Text>
         <Text style={styles.txtStyle}> We will provide you the right plants for your area. 😀</Text>
       </View>

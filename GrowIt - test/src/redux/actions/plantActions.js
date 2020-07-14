@@ -1,12 +1,14 @@
 import * as Location from 'expo-location';
 import { AsyncStorage } from 'react-native';
-
+import { Toast } from 'native-base';
+import { setNotification, cancelScheduledNotification } from '../../localNotification'
 import {
     INIT_SYS,
     SET_PLANTS_LIST,
     ADD_PLANT_TO_LIST,
     SET_MY_PLANTS_LIST
 } from './plantsTypes';
+import { removeNotificationSubscription } from 'expo-notifications';
 
 
 function getHumanDate() {
@@ -81,27 +83,32 @@ export const initSystem = () => (dispatch) => {
 
 
 export const addToMyPlants = (plant) => (dispatch) => {
-    // Object.assign(plant, { _id: String(nextId()),  }) // to prevent same id when render MyPlants list 
     Object.assign(plant, { _id: String(plant._id + Date.now()), addedAt: getHumanDate() }) // to prevent same id when render MyPlants list 
-
     dispatch({
         type: ADD_PLANT_TO_LIST,
         plant: plant
     })
 }
 
-export const removeFromDevice = (itemId) => (dispatch) => {
-    fetchMemo().then(data => {
-        data = data.filter(item => item._id !== itemId)
-        dispatch({
-            type: SET_MY_PLANTS_LIST,
-            updatedMyPlantsArray: data
+export const irrigatePlantAndUpdate = (plant) => (dispatch) => {
+    const timeToIrrigate = (Date.now() / 1000) + Number(plant.waterAmount)
+    if (plant.notificationId !== undefined) {
+        const prevNotificationId = plant.notificationId
+        cancelScheduledNotification(prevNotificationId)
+    }
+    setNotification('GrowItApp', `Time to irrigate ${plant.name} !💦`, plant.imgUrl, Number(plant.waterAmount))
+      .then((notificationId) => {
+        Object.assign(plant, { nextIrrigate: timeToIrrigate, notificationId: notificationId })
+        Toast.show({
+          text: `${plant.name} is glad you take care of it ! 💦🌲`,
+          textStyle: { fontFamily: 'Comfortaa_600SemiBold' },
+          buttonText: "Okay",
+          buttonTextStyle: { fontFamily: 'Comfortaa_600SemiBold', color: 'blue' },
+          type: "success",
+          duration: 2500,
         })
-
-    }).catch((e) => console.log('failed to remove! = ', e.message))
-}
-
-export const updatePlantIrrigateOnMemo = (plant) => (dispatch) => {
+      })
+      .catch(e => console.log('error =>', e))
     fetchMemo().then(data => {
         data = data.filter(item => item._id !== plant._id)
         data = [...data, plant]
@@ -111,6 +118,29 @@ export const updatePlantIrrigateOnMemo = (plant) => (dispatch) => {
         })
 
     })
+  }
+
+
+export const removeFromDevice = (plant) => (dispatch) => {
+    if(plant.notificationId != undefined){
+        cancelScheduledNotification(plant.notificationId)
+        console.log('plant.notificationId removed! ->', plant.notificationId)
+    }
+    Toast.show({
+        text: `${plant.name} remove 🙁`,
+        textStyle: { fontFamily: 'Comfortaa_600SemiBold' },
+        buttonText: "Okay",
+        buttonTextStyle: { fontFamily: 'Comfortaa_600SemiBold', color: 'blue' },
+        type: "success",
+        duration: 2500,
+    })
+    fetchMemo().then(data => {
+        data = data.filter(item => item._id !== plant._id)
+        dispatch({
+            type: SET_MY_PLANTS_LIST,
+            updatedMyPlantsArray: data
+        })
+    }).catch((e) => console.log('failed to remove! = ', e.message))
 }
 
 

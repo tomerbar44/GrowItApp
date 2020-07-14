@@ -34,7 +34,7 @@ function PlantItem({ plantObj,navigation }) {
                 </Body>
                 <Body>
                   <Text style={styles.txt}>Water</Text>
-                  <Text note style={styles.txt}>{plantObj.waterAmount/86400} days per week</Text>
+                  <Text note style={styles.txt}>each {plantObj.waterAmount/86400} days</Text>
                 </Body>
                 <Body>
                   <Text style={styles.txt}>Temp</Text>

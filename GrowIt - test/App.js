@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import GrowItApp from './src/components/MainScreen/mainScreen';
 import PlantListSuggested from './src/components/PlantsListSuggested/PlantListSuggested';
 import PlantPage from './src/components/PlantPage/PlantPage'
-import myPlantsPage from './src/components/myPlantsPage'
+import myPlantsPage from './src/components/MyPlantsPage/myPlantsPage'
 import store from './src/redux/store'
 import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
 
