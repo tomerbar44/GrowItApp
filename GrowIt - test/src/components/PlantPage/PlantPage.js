@@ -6,28 +6,27 @@ import { Container, Content, Card, CardItem, Text, Button, Left, Body, Toast } f
 import { addToMyPlants } from '../../redux/actions/plantActions';
 import styles from './style';
 
-
 function PlantListSuggested({ navigation, route }) {
-  const { plantObj } = route.params
-  const dispatch = useDispatch()
+  const { plantObj } = route.params;
+  const dispatch = useDispatch();
 
   async function buttonEvent() {
-    await dispatch(addToMyPlants(plantObj))
+    await dispatch(addToMyPlants(plantObj));
     Toast.show({
       text: `${plantObj.name} added to your garden ! 🥳`,
       textStyle: { fontFamily: 'Comfortaa_600SemiBold' },
-      buttonText: "Okay",
+      buttonText: 'Okay',
       buttonTextStyle: { fontFamily: 'Comfortaa_600SemiBold', color: 'blue' },
-      type: "success",
+      type: 'success',
       duration: 2500,
       onClose() {
         navigation.reset({
           index: 0,
           routes: [{ name: 'Home' }]
-        })
-        navigation.navigate('myPlantsPage')
+        });
+        navigation.navigate('myPlantsPage');
       }
-    })
+    });
   }
 
   return (
@@ -38,7 +37,9 @@ function PlantListSuggested({ navigation, route }) {
             <Left>
               <Body>
                 <Text style={styles.font}>Treatment:</Text>
-                <Text note style={styles.font}>{plantObj.howToITreat}</Text>
+                <Text note style={styles.font}>
+                  {plantObj.howToITreat}
+                </Text>
               </Body>
             </Left>
           </CardItem>
@@ -51,11 +52,13 @@ function PlantListSuggested({ navigation, route }) {
             <Left>
               <Body>
                 <Text style={styles.font}>Some words on it:</Text>
-                <Text note style={styles.font}>{plantObj.description}</Text>
+                <Text note style={styles.font}>
+                  {plantObj.description}
+                </Text>
               </Body>
             </Left>
           </CardItem>
-          <CardItem style={styles.justify} >
+          <CardItem style={styles.justify}>
             <Button bordered onPress={() => buttonEvent()}>
               <Text style={styles.font}>Start Grow !</Text>
             </Button>
@@ -64,7 +67,7 @@ function PlantListSuggested({ navigation, route }) {
       </Content>
     </Container>
   );
-};
+}
 
 PlantListSuggested.propTypes = {
   route: object

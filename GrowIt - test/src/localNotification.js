@@ -1,15 +1,15 @@
 import { Notifications } from 'expo';
 
-
-export function setNotification(title, body,imgUrl, time) {
+export function setNotification(title, body, imgUrl, time) {
   const localNotification = {
-    title: title,
-    body: body, // (string) — body text of the notification.
-    ios: { // (optional) (object) — notification configuration specific to iOS.
+    title,
+    body, // (string) — body text of the notification.
+    ios: {
+      // (optional) (object) — notification configuration specific to iOS.
       sound: true // (optional) (boolean) — if true, play a sound. Default: false.
     },
-    android: // (optional) (object) — notification configuration specific to Android.
-    {
+    // (optional) (object) — notification configuration specific to Android.
+    android: {
       sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
       //icon (optional) (string) — URL of icon to display in notification drawer.
       icon: imgUrl,
@@ -21,20 +21,18 @@ export function setNotification(title, body,imgUrl, time) {
     }
   };
 
-  let t = new Date().getTime() + time;
+  const t = new Date().getTime() + time;
   // t.setSeconds(t.getSeconds() + time);
   const schedulingOptions = {
-    time: t, // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+    time: t // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
     // repeat: 'minute'
   };
 
   return Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
 }
 
-
 export function cancelScheduledNotification(notificationId) {
   Notifications.cancelScheduledNotificationAsync(notificationId)
-  .then(data => console.log('success to cancel !!' + data  ))
-  .catch(e => 'failed to cancel ' + e)
+    .then((data) => console.log('success to cancel !!' + data))
+    .catch((e) => 'failed to cancel ' + e);
 }
-

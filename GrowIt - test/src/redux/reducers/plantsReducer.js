@@ -1,20 +1,25 @@
-import {INIT_SYS, PLANTS_LOADED, PLANTS_LOADING, SET_LOCATION, SET_VALUE, PLANTS_TYPE_LOADED, SET_PLANTS_LIST, ADD_PLANT_TO_LIST, GET_PLANTS_FROM_MEMO,SET_MY_PLANTS_LIST } from '../actions/plantsTypes';
+import {
+  INIT_SYS,
+  PLANTS_LOADED,
+  PLANTS_LOADING,
+  SET_LOCATION,
+  SET_VALUE,
+  PLANTS_TYPE_LOADED,
+  SET_PLANTS_LIST,
+  ADD_PLANT_TO_LIST,
+  GET_PLANTS_FROM_MEMO,
+  SET_MY_PLANTS_LIST
+} from '../actions/plantsTypes';
 import { AsyncStorage } from 'react-native';
-
-
-
 
 async function saveToMemory(plantToAdd) {
   try {
-    await AsyncStorage.setItem('myPlants', JSON.stringify(plantToAdd))
-    console.log('saved on memory!@!')
-
+    await AsyncStorage.setItem('myPlants', JSON.stringify(plantToAdd));
+    console.log('saved on memory!@!');
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
 }
-
-
 
 const initialState = {
   location: { lat: null, lon: null },
@@ -22,7 +27,7 @@ const initialState = {
   types: [],
   isLoading: false,
   storedVal: 'default value',
-  myPlants: [] // the init is to bring from memory the former plants 
+  myPlants: [] // the init is to bring from memory the former plants
 };
 
 export default (state = initialState, action) => {
@@ -42,7 +47,6 @@ export default (state = initialState, action) => {
         isLoading: false
       };
 
-
     case SET_LOCATION:
       // console.log('action = ', action)
       return {
@@ -57,7 +61,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         storedVal: action.storedVal
-      }
+      };
 
     case SET_PLANTS_LIST:
       // console.log('action.plantsList = ', action.plantsList)
@@ -65,41 +69,40 @@ export default (state = initialState, action) => {
         ...state,
         plantsList: action.plantsList,
         isLoading: false
-      }
+      };
 
     case ADD_PLANT_TO_LIST:
-      let updatedMyPlantsArray = [...state.myPlants, action.plant]
-      saveToMemory(updatedMyPlantsArray)
+      const updatedMyPlantsArray = [...state.myPlants, action.plant];
+      saveToMemory(updatedMyPlantsArray);
       return {
         ...state,
         myPlants: updatedMyPlantsArray
-      }
+      };
 
-      case SET_MY_PLANTS_LIST:
-      saveToMemory(action.updatedMyPlantsArray)
+    case SET_MY_PLANTS_LIST:
+      saveToMemory(action.updatedMyPlantsArray);
       return {
         ...state,
         myPlants: action.updatedMyPlantsArray
-      }
+      };
 
-      case GET_PLANTS_FROM_MEMO:
-        return {
-          ...state,
-          myPlants: action.data
-        }
+    case GET_PLANTS_FROM_MEMO:
+      return {
+        ...state,
+        myPlants: action.data
+      };
 
-
-        case INIT_SYS:
-          return{
-            ...state,
-            location: {
-              lat: action.lat,
-              lon: action.lon
-            },
-            types: action.types,
-            isLoading: false,
-            myPlants: action.data
-          }
+    case INIT_SYS:
+      return {
+        ...state,
+        location: {
+          lat: action.lat,
+          lon: action.lon
+        },
+        types: action.types,
+        isLoading: false,
+        myPlants: action.data
+      };
     default:
       return state;
   }
