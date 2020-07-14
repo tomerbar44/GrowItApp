@@ -6,9 +6,9 @@ import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Ic
 // import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
 
 
-import {addToMyPlants} from '../redux/actions/plantActions';
-import styles from '../style/style';
-import PlantItem from './PlantItem'
+import {addToMyPlants} from '../../redux/actions/plantActions';
+import styles from './style';
+import PlantItem from '../PlantItem/PlantItem'
 // import { Toast, Button } from 'native-base'
 
 

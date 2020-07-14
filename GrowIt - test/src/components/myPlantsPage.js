@@ -8,7 +8,7 @@ import { setNotification, cancelScheduledNotification } from '../localNotificati
 import { List, ListItem, Left, Body, Right, Thumbnail, Text, Toast } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import styles from '../style/style';
+import styles from './MainScreen/style';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromDevice, updatePlantIrrigateOnMemo } from '../redux/actions/plantActions';
 import ModalComponent from './ModalComponent'
