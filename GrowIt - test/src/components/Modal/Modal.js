@@ -40,8 +40,8 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
 };
 
 ModalComponent.propTypes = {
-  plantObj: PropTypes.object,
-  navigation: PropTypes.object
+  modalVisible: PropTypes.func,
+  setModalVisible: PropTypes.func
 };
 
 export default ModalComponent;

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { initSystem } from '../../redux/actions/plantActions';
 import { Card, CardItem, Text, Left, Body } from 'native-base';
 import Loading from '../Loading/Loading';
-import { bool, object, array, func } from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './style';
 
 const GrowItApp = ({ navigation }) => {
@@ -28,7 +28,7 @@ const GrowItApp = ({ navigation }) => {
           keyExtractor={(item) => item}
           data={types}
           renderItem={({ item }) => (
-            <View style={{ margin: 10 }}>
+            <View style={styles.margin}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('PlantListSuggested', {
@@ -63,7 +63,7 @@ const GrowItApp = ({ navigation }) => {
 };
 
 GrowItApp.propTypes = {
-  navigation: object
+  navigation: PropTypes.object
 };
 
 export default GrowItApp;
