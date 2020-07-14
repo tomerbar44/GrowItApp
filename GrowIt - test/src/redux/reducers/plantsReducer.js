@@ -19,7 +19,6 @@ const initialState = {
   location: { lat: null, lon: null },
   plantsList: [],
   types: [],
-  storedVal: 'default value',
   myPlants: [] // the init is to bring from memory the former plants
 };
 
@@ -29,11 +28,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         plantsList: action.plantsList,
-        isLoading: false
       };
 
     case ADD_PLANT_TO_LIST:
-      // const updatedMyPlantsArray = [...state.myPlants, action.plant];
       saveToMemory([...state.myPlants, action.plant]);
       return {
         ...state,
