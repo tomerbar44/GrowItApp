@@ -6,7 +6,7 @@ import { Container, Content, Card, CardItem, Text, Button, Left, Body, Toast } f
 import { addToMyPlants } from '../../redux/actions/plantActions';
 import styles from './style';
 
-function PlantListSuggested({ navigation, route }) {
+function PlantPage({ navigation, route }) {
   const { plantObj } = route.params;
   const dispatch = useDispatch();
 
@@ -69,8 +69,8 @@ function PlantListSuggested({ navigation, route }) {
   );
 }
 
-PlantListSuggested.propTypes = {
+PlantPage.propTypes = {
   route: object
 };
 
-export default PlantListSuggested;
+export default PlantPage;
