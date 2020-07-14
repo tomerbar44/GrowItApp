@@ -41,7 +41,7 @@ function PlantItem({ plantObj,navigation }) {
                 </Body>
                 <Body>
                   <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>Water</Text>
-                  <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>{plantObj.waterAmount} per week</Text>
+                  <Text note style={{fontFamily:'Comfortaa_600SemiBold'}}>{plantObj.waterAmount/86400} days per week</Text>
                 </Body>
                 <Body>
                   <Text style={{fontFamily:'Comfortaa_600SemiBold'}}>Temp</Text>
