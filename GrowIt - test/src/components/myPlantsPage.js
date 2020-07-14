@@ -47,7 +47,7 @@ const myPlantsPage = ({ navigation }) => {
       const prevNotificationId = plantObj.notificationId
       cancelScheduledNotification(prevNotificationId)
     }
-    setNotification(plantObj.name, 'Time to irrigate!', plantObj.imgUrl, Number(plantObj.waterAmount))
+    setNotification('GrowItApp', `Time to irrigate ${plantObj.name} !💦`, plantObj.imgUrl, Number(plantObj.waterAmount))
       .then(async (notificationId) => {
         console.log('Notification id =>', notificationId)
         Object.assign(plantObj, { nextIrrigate: timeToIrrigate, notificationId: notificationId })

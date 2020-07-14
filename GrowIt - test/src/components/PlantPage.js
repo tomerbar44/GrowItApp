@@ -10,7 +10,6 @@ import {addToMyPlants} from '../redux/actions/plantActions';
 import styles from '../style/style';
 import PlantItem from './PlantItem'
 // import { Toast, Button } from 'native-base'
-import ToastType from './ToastButton'
 
 
 
