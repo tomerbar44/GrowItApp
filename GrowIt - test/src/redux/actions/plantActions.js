@@ -33,7 +33,9 @@ async function fetchMemo() {
 }
 
 export const initSystem = () => (dispatch) => {
+  console.log('inside initSystemAction')
   const getTypesURL = `https://mobile-final-project-server.herokuapp.com/GrowIt/api/type`;
+
   async function init() {
     try {
       const response = await fetch(getTypesURL).then((res) => res.json());
@@ -62,7 +64,7 @@ export const initSystem = () => (dispatch) => {
     }
   }
   init().then(() => {
-    return;
+    return
   });
 };
 

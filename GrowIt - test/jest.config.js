@@ -7,7 +7,7 @@ module.exports = Object.assign(expoPreset, jestPreset, {
     '@testing-library/react-native/cleanup-after-each' /*,'<rootDir>/setup-tests.js'*/
   ],
   transformIgnorePatterns: [
-    "node_modules/(?!(react-native|my-project|react-native-button|expo-location)/)"
+    "node_modules/(?!(react-native|my-project|react-native-button|expo-location|native-base)/)"
   ],
   preset:"jest-expo"
 });
