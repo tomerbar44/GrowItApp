@@ -39,7 +39,7 @@ const myPlantsPage = ({ navigation }) => {
                 <Text note style={styles.font}>
                   Click for info
                 </Text>
-                <Text style={styles.font}>Growth status</Text>
+                <Text style={styles.font}>Irrigation status</Text>
                 <ProgressBar
                   progress={item.nextIrrigate ? processPart(item) : 0}
                   color={Colors.blue800}
