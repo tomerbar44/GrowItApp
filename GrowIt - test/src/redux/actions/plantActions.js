@@ -38,7 +38,7 @@ export const initSystem = () => (dispatch) => {
     try {
       const response = await fetch(getTypesURL).then((res) => res.json());
       const memoInit = await fetchMemo();
-      const coordinates = await askPermissionFromUser().catch(() => {
+      const coordinates = await askPermissionFromUser().catch(() => { // on AVD 
         return { coords: { latitude: '30', longitude: '30' } };
       });
 
@@ -84,7 +84,7 @@ export const irrigatePlantAndUpdate = (plant) => (dispatch) => {
     'GrowItApp',
     `Time to irrigate ${plant.name} !💦`,
     plant.imgUrl,
-    Number(plant.waterAmount)
+    Number(plant.waterAmount) * 1000
   )
     .then((notificationId) => {
       Object.assign(plant, { nextIrrigate: timeToIrrigate, notificationId });
@@ -96,18 +96,20 @@ export const irrigatePlantAndUpdate = (plant) => (dispatch) => {
         type: 'success',
         duration: 2500
       });
+      fetchMemo().then((data) => {
+        data = data.filter((item) => item._id !== plant._id);
+        data = [...data, plant];
+        dispatch({
+          type: SET_MY_PLANTS_LIST,
+          updatedMyPlantsArray: data
+        });
+      });
     })
     .catch((e) => console.log('error =>', e));
-  fetchMemo().then((data) => {
-    data = data.filter((item) => item._id !== plant._id);
-    data = [...data, plant];
-    dispatch({
-      type: SET_MY_PLANTS_LIST,
-      updatedMyPlantsArray: data
-    });
-  });
+
 };
 
+// https://www.youtube.com/watch?v=ZFsfn_6QIiY&list=PLAL9z42fi5AgeI5moPb5QB68u0wbWwX7V&index=9&t=1688s 46:20 to delete test
 export const removeFromDevice = (plant) => (dispatch) => {
   if (plant.notificationId !== undefined) {
     cancelScheduledNotification(plant.notificationId);

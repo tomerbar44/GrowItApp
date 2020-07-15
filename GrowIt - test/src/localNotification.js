@@ -22,6 +22,7 @@ export function setNotification(title, body, imgUrl, time) {
   };
 
   const t = new Date().getTime() + time;
+  console.log('t ----->', t)
   // t.setSeconds(t.getSeconds() + time);
   const schedulingOptions = {
     time: t // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
