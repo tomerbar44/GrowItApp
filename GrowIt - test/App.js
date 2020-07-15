@@ -77,7 +77,7 @@ export default function App() {
             <Stack.Screen
               name="myPlantsPage"
               component={myPlantsPage}
-              options={() => ({ title: 'My plants', headerBackTitle: 'Back' })}
+              options={() => ({ title: 'My garden', headerBackTitle: 'Back' })}
             />
           </Stack.Navigator>
         </NavigationContainer>

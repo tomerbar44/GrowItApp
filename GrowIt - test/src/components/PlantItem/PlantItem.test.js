@@ -4,10 +4,20 @@ import PlantItem from './PlantItem'
 
 describe('PlantItem component Test', function () {
    
-    test('add plant to PlantsList ', function () {
+    test('render plant item component snapshot ', function () {
       const { baseElement }= render(<PlantItem key={1212} navigation={{}} plantObj={onePlant} />)
-      expect(baseElement.toMatchSnapshot())
+      expect(baseElement).toMatchSnapshot()
     });
+    // test('render plant item component with given plant object ', function () {
+    //   const { getAllByText }= render(<PlantItem key={1212} navigation={{}} plantObj={onePlant} />)
+    //   console.log("getAllByDisplayValue",getAllByText)
+    // });
+
+    // test('render plant item component with given plant object ', function () {
+    //   const onPressSpy = jest.fn();
+    //   const { getAllByDisplayValue }= render(<PlantItem key={1212} navigation={{}} plantObj={onePlant} />)
+    //   console.log("getAllByDisplayValue",getAllByDisplayValue)
+    // });
   
 });
 
