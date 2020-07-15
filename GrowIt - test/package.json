@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest",
+    "test": "node_modules/.bin/jest --watch",
     "lint": "npx eslint --cache --fix --format codeframe --ext .js ."
   },
   "dependencies": {
@@ -77,4 +77,5 @@
     "submissionDate": "18/05/2020",
     "delay": false
   }
+  
 }

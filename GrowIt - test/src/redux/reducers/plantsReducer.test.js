@@ -53,7 +53,8 @@ describe('plantsReducer Test', function () {
     );
 
     expect(state.myPlants).toHaveLength(3);
-    // AsyncStorage.getItem('testKey')
+    expect(state.plantsList).toHaveLength(0)
+        // AsyncStorage.getItem('testKey')
     // .then((stringValue) => {
 
     //  return JSON.parse(stringValue)
