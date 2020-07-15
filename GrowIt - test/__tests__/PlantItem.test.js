@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-import PlantItem from './PlantItem'
+import PlantItem from '../src/components/PlantItem/PlantItem'
 
 describe('PlantItem component Test', function () {
    
