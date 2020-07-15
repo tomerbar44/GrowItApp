@@ -1,11 +1,8 @@
 import React from 'react';
-// import * as Font from 'expo-font';
-
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import { Provider } from 'react-redux';
 import GrowItApp from './src/components/MainScreen/mainScreen';
 import PlantListSuggested from './src/components/PlantsListSuggested/PlantListSuggested';
@@ -58,7 +55,7 @@ export default function App() {
                         style={styles.icon}
                         onPress={() => navigation.navigate('myPlantsPage')}
                       />
-                      <Text style={styles.text}>My plants</Text>
+                      <Text style={styles.text}>My garden</Text>
                     </View>
                   );
                 }
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   icon: {
-    marginLeft: 8
+    marginLeft: 11
   },
   text: {
     fontFamily: 'Comfortaa_600SemiBold',
