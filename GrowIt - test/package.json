@@ -22,6 +22,7 @@
     "expo-location": "~8.1.0",
     "expo-notifications": "~0.1.1",
     "expo-secure-store": "^8.1.0",
+    "fetch-mock": "^9.10.3",
     "jest": "^26.1.0",
     "mock-async-storage": "^2.2.0",
     "native-base": "^2.13.12",
@@ -43,6 +44,7 @@
     "react-navigation-stack": "^2.5.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
@@ -77,5 +79,4 @@
     "submissionDate": "18/05/2020",
     "delay": false
   }
-  
 }

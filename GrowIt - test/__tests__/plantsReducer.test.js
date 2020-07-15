@@ -7,9 +7,9 @@ import {
   SET_MY_PLANTS_LIST,
   ADD_PLANT_TO_LIST,
   INIT_SYS
-} from '../actions/plantsTypes';
+} from '../src/redux/actions/plantsTypes';
 import 'react-native';
-import plantsReducer from './plantsReducer';
+import plantsReducer from '../src/redux/reducers/plantsReducer';
 // import MockAsyncStorage from 'mock-async-storage';
 // import renderer from 'react-test-renderer';
 
