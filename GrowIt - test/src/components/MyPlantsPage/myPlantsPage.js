@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ModalComponent from '../Modal/Modal';
 import styles from './style';
 
-const myPlantsPage = ({ navigation }) => {
+const MyPlantsPage = ({ navigation }) => {
   const dispatch = useDispatch();
   const myPlants = useSelector((state) => state.plantsReducer.myPlants);
   const [modalVisible, setModalVisible] = useState({ flag: false, obj: {} });
@@ -108,4 +108,8 @@ ClockComponent.propTypes = {
   countDownInSec: PropTypes.number
 };
 
-export default myPlantsPage;
+MyPlantsPage.propTypes = {
+  navigation: PropTypes.object
+};
+
+export default MyPlantsPage;

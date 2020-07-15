@@ -7,7 +7,7 @@ import Loading from '../Loading/Loading';
 import PropTypes from 'prop-types';
 import styles from './style';
 
-const GrowItApp = ({ navigation }) => {
+const MainScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(initSystem());
@@ -63,8 +63,8 @@ const GrowItApp = ({ navigation }) => {
   );
 };
 
-GrowItApp.propTypes = {
+MainScreen.propTypes = {
   navigation: PropTypes.object
 };
 
-export default GrowItApp;
+export default MainScreen;

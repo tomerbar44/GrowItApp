@@ -4,10 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Provider } from 'react-redux';
-import GrowItApp from './src/components/MainScreen/mainScreen';
+import MainScreen from './src/components/MainScreen/MainScreen';
 import PlantListSuggested from './src/components/PlantsListSuggested/PlantListSuggested';
 import PlantPage from './src/components/PlantPage/PlantPage';
-import myPlantsPage from './src/components/MyPlantsPage/myPlantsPage';
+import MyPlantsPage from './src/components/MyPlantsPage/MyPlantsPage';
 import store from './src/redux/store';
 import { useFonts, Comfortaa_600SemiBold } from '@expo-google-fonts/comfortaa';
 import { AppLoading } from 'expo';
@@ -42,7 +42,7 @@ export default function App() {
           >
             <Stack.Screen
               name="Home"
-              component={GrowItApp}
+              component={MainScreen}
               options={({ navigation }) => ({
                 title: 'GrowIt',
                 headerRight() {
@@ -76,7 +76,7 @@ export default function App() {
             />
             <Stack.Screen
               name="myPlantsPage"
-              component={myPlantsPage}
+              component={MyPlantsPage}
               options={() => ({ title: 'My garden', headerBackTitle: 'Back' })}
             />
           </Stack.Navigator>
