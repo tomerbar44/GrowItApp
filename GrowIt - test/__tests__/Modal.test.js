@@ -1,12 +1,16 @@
 import React from 'react'
 import { render } from '@testing-library/react-native'
-import PlantItem from '../src/components/PlantItem/PlantItem'
+import Modal from '../src/components/Modal/Modal'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
 
-describe('PlantItem component Test', function () {
-   
-    test('render plant item component snapshot ', function () {
-      const { baseElement }= render(<PlantItem key={1212} navigation={{}} plantObj={onePlant} />)
-      expect(baseElement).toMatchSnapshot()
+describe('Modal component Test', function () {
+    const initialState = {output:10}
+    const mockStore = configureStore()
+    test('render modal component snapshot ', function () {
+        store = mockStore(initialState)
+        const { baseElement }= render(<Provider store={store}><Modal modalVisible={{obj:onePlant,flag:true}} setModalVisible={()=>{}} /></Provider>)
+        expect(baseElement).toMatchSnapshot()
     });
   
 });

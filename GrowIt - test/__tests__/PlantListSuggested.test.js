@@ -1,0 +1,136 @@
+import React from 'react'
+import { render } from '@testing-library/react-native'
+import PlantListSuggested from '../src/components/PlantsListSuggested/PlantListSuggested'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
+import axios from 'axios';
+const { setPlantList} = require("../src/redux/actions/plantActions")
+
+import configureMockStore from 'redux-mock-store'
+
+
+
+import thunk from 'redux-thunk'
+
+const middlewares = [thunk]
+const mockStore = configureMockStore(middlewares)
+
+jest.mock('axios')
+describe('PlantListSuggested component Test', function () {
+    const initialState = {
+            plantsReducer: {
+                location: {
+                    lat: 30, lon: 20
+                },
+                plantsList:PlantsListMock
+            }
+    }
+    // const mockStore = configureStore()
+    test('render plant list suggested component snapshot ', function () {
+        store = mockStore(initialState)
+        axios.get.mockImplementationOnce(()=>  Promise.resolve(PlantsResponseMock))
+        store.dispatch(setPlantList(PlantsResponseMock.data.dbresult))
+
+       
+        const { baseElement } = render(<Provider store={store}><PlantListSuggested route={{ params: { buttonType: "plants" } }} /></Provider>)
+        expect(baseElement).toMatchSnapshot()
+    });
+
+    // test('render plant page component without start grow button snapshot', function () {
+    //     store = mockStore(initialState)
+    //     const { baseElement }= render(<Provider store = {store}><PlantPage route={{params:{ plantObj:onePlant, buttonFlag:false }}} /></Provider>)
+    //     expect(baseElement).toMatchSnapshot()
+    // });
+
+});
+
+
+const onePlant = {
+    months: [7, 1, 8, 9, 2, 3, 4],
+    _id: '5f0da4922f105dcd2e8b681c',
+    name: 'Cucumber',
+    family: 'Cucurbitaceae',
+    description: `Its elongated fruit is juicy and very rich in water. Its green color is eaten raw, pickled in salt or pickled.The plant originated in India, where humans began growing it about 3, 000 years ago.Today, cucumber is a very common vegetable, and it is grown in greenhouses or open fields.`,
+    type: 'vegetables',
+    waterAmount: '259200',
+    imgUrl: 'https://img.wcdn.co.il/f_auto,w_1200,t_54/1/4/9/8/1498895-46.jpg',
+    howToITreat:
+        'Water the cucumbers until the soil is thoroughly absorbed and maintain this moisture at all times.',
+    recommendedTemp: 25,
+    recommendedHumidity: 25,
+    recommendedClouds: 15
+}
+
+
+
+const PlantsResponseMock = {
+    data:{
+    dbresult:[
+        {
+          months: [7, 1, 8, 9, 2, 3, 4],
+          _id: '5f0da3112f105dcd2e8b681b',
+          name: 'Onion',
+          family: 'Liliaceae',
+          description:
+            'The onion is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, scallion, shallot, leek, chive, and Chinese onion. ',
+          type: 'vegetables',
+          waterAmount: '43200',
+          imgUrl: 'https://flevotrade.nl/wp-content/uploads/2019/11/flevotrade_onions_product.jpg',
+          howToITreat:
+            'Keep soil moist, water well but avoid spilling water and flooding the plant. Place the seedling near a window exposed to direct sunlight.',
+          recommendedTemp: 30,
+          recommendedHumidity: 30,
+          recommendedClouds: 10
+        },
+        {
+          months: [7, 1, 8, 9, 2, 3, 4],
+          _id: '5f0da4922f105dcd2e8b681c',
+          name: 'Cucumber ',
+          family: 'Cucurbitaceae',
+          description: `Its elongated fruit is juicy and very rich in water. Its green color is eaten raw, pickled in salt or pickled.The plant originated in India, where humans began growing it about 3, 000 years ago.Today, cucumber is a very common vegetable, and it is grown in greenhouses or open fields.`,
+          type: 'vegetables',
+          waterAmount: '259200',
+          imgUrl: 'https://img.wcdn.co.il/f_auto,w_1200,t_54/1/4/9/8/1498895-46.jpg',
+          howToITreat:
+            'Water the cucumbers until the soil is thoroughly absorbed and maintain this moisture at all times.',
+          recommendedTemp: 25,
+          recommendedHumidity: 25,
+          recommendedClouds: 15
+        }
+      ]
+    }
+} 
+  
+const PlantsListMock = [
+    {
+      months: [7, 1, 8, 9, 2, 3, 4],
+      _id: '5f0da3112f105dcd2e8b681b',
+      name: 'Onion',
+      family: 'Liliaceae',
+      description:
+        'The onion is a vegetable that is the most widely cultivated species of the genus Allium. Its close relatives include the garlic, scallion, shallot, leek, chive, and Chinese onion. ',
+      type: 'vegetables',
+      waterAmount: '43200',
+      imgUrl: 'https://flevotrade.nl/wp-content/uploads/2019/11/flevotrade_onions_product.jpg',
+      howToITreat:
+        'Keep soil moist, water well but avoid spilling water and flooding the plant. Place the seedling near a window exposed to direct sunlight.',
+      recommendedTemp: 30,
+      recommendedHumidity: 30,
+      recommendedClouds: 10
+    },
+    {
+      months: [7, 1, 8, 9, 2, 3, 4],
+      _id: '5f0da4922f105dcd2e8b681c',
+      name: 'Cucumber ',
+      family: 'Cucurbitaceae',
+      description: `Its elongated fruit is juicy and very rich in water. Its green color is eaten raw, pickled in salt or pickled.The plant originated in India, where humans began growing it about 3, 000 years ago.Today, cucumber is a very common vegetable, and it is grown in greenhouses or open fields.`,
+      type: 'vegetables',
+      waterAmount: '259200',
+      imgUrl: 'https://img.wcdn.co.il/f_auto,w_1200,t_54/1/4/9/8/1498895-46.jpg',
+      howToITreat:
+        'Water the cucumbers until the soil is thoroughly absorbed and maintain this moisture at all times.',
+      recommendedTemp: 25,
+      recommendedHumidity: 25,
+      recommendedClouds: 15
+    }
+  ];
