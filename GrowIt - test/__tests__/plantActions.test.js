@@ -1,3 +1,4 @@
+import React from 'react'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
@@ -18,10 +19,10 @@ const { INIT_SYS, ADD_PLANT_TO_LIST } = require("../src/redux/actions/plantsType
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-function getHumanDate() {
-    const date = new Date(Date.now());
-    return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-}
+// function getHumanDate() {
+//     const date = new Date(Date.now());
+//     return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+// }
 
 // jest.mock('../../../node_modules/expo-location', () => {
 //     return { coords: { latitude: '30', longitude: '30' } }
@@ -31,17 +32,14 @@ function getHumanDate() {
 //     return { }
 // })
 describe("plant Action Test", function () {
-
     afterEach(() => {
         fetchMock.restore()
     })
-
     test('addToMyPlants', function () {
         // fetchMock.getOnce('/plant', {
         //     body: { plant: onePlant },
         //     headers: { 'content-type': 'application/json' }
         // })
-
         expectedActions = [{
             type: ADD_PLANT_TO_LIST,
             plant: onePlant
@@ -52,16 +50,55 @@ describe("plant Action Test", function () {
             types: [],
             myPlants: [] // the init is to bring from memory the former plants
         })
-        store.dispatch(addToMyPlants(onePlant))
-        // expect(store.getActions()).toEqual(expectedActions)
-        // expect(store.getActions()).toHaveProperty('addedAt',getHumanDate());
-        expect(store.getActions()).toHaveLength(1);
         // expect(store.getActions()).toContain({ plant: onePlant });
+        // expect(store.getActions()).toHaveProperty('addedAt',getHumanDate());
+        // console.log('store.dispatch(addToMyPlants(onePlant)) ---> ', store.dispatch(addToMyPlants(onePlant)))
+        store.dispatch(addToMyPlants(onePlant))
+        console.log('store.getActions() => ', store.getActions())
+        expect(store.getActions()).toEqual(expectedActions)
+        expect(store.getActions()).toHaveLength(1);
         expect(store.getActions()).toEqual(expect.arrayContaining([
-            expect.objectContaining({plant:onePlant})
+            expect.objectContaining({ plant: onePlant })
         ]));
     })
-})
+
+
+    test('initSystem', function () {
+        fetchMock.getOnce('/init', {
+            body: {
+                type: INIT_SYS,
+                lat: '30',
+                lon: '30',
+                types: ["flowers", 'plants', 'fruits', 'vegetables'],
+                data: []
+            },
+            headers: { 'content-type': 'application/json' }
+        })
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                json: () => Promise.resolve({ types: ["flowers", 'plants', 'fruits', 'vegetables'] })
+            }))
+
+        const store = mockStore({
+            location: { lat: null, lon: null },
+            plantsList: [],
+            types: ["flowers", 'plants', 'fruits', 'vegetables'],
+            myPlants: [] // the init is to bring from memory the former plants
+        })
+
+        expectedActions = [{
+            type: INIT_SYS,
+            lat: '30',
+            lon: '30',
+            types: ["flowers", 'plants', 'fruits', 'vegetables'],
+            data: []
+        }]
+
+        store.dispatch(initSystem())
+        console.log('store.getActions() ---> ', store.getActions())
+    }
+
+    
 
 
 const onePlant = {
@@ -78,7 +115,7 @@ const onePlant = {
     recommendedTemp: 25,
     recommendedHumidity: 25,
     recommendedClouds: 15
-};
+}
 
 const onePlant2 = {
     months: [7, 1, 8, 9, 2, 3, 4],
@@ -94,4 +131,4 @@ const onePlant2 = {
     recommendedTemp: 25,
     recommendedHumidity: 25,
     recommendedClouds: 15
-};
+}

@@ -20,6 +20,7 @@ async function askPermissionFromUser() {
 }
 
 async function fetchMemo() {
+  
   console.log('inside bringDataFromMemory!');
   try {
     const data = await AsyncStorage.getItem('myPlants').then((data) => JSON.parse(data));
@@ -39,12 +40,15 @@ export const initSystem = () => (dispatch) => {
   async function init() {
     try {
       const response = await fetch(getTypesURL).then((res) => res.json());
-      const memoInit = await fetchMemo();
+      const memoInit = await fetchMemo().catch(() => {
+        return []
+      });
       const coordinates = await askPermissionFromUser().catch(() => { // on AVD 
         return { coords: { latitude: '30', longitude: '30' } };
       });
 
       console.log('coordinates =>>', coordinates);
+      console.log('memoInit =>>', memoInit);
       dispatch({
         type: INIT_SYS,
         lat: coordinates.coords.latitude,
@@ -52,6 +56,14 @@ export const initSystem = () => (dispatch) => {
         types: response.dbresult,
         data: memoInit
       });
+
+      // dispatch({
+      //   type: INIT_SYS,
+      //   lat: '30',
+      //   lon: '30',
+      //   types: [],
+      //   data: []
+      // });
     } catch (e) {
       console.log('e ->', e);
       dispatch({
