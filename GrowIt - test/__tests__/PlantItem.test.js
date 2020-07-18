@@ -1,15 +1,15 @@
-// import React from 'react'
-// import { render } from '@testing-library/react-native'
-// import PlantItem from '../src/components/PlantItem/PlantItem'
+import React from 'react'
+import { render } from '@testing-library/react-native'
+import PlantItem from '../src/components/PlantItem/PlantItem'
 
-// describe('PlantItem component Test', function () {
+describe('PlantItem component Test', function () {
    
-//     test('render plant item component snapshot ', function () {
-//       const { baseElement }= render(<PlantItem key={1212} navigation={{}} plantObj={onePlant} />)
-//       expect(baseElement).toMatchSnapshot()
-//     });
+    test('render plant item component snapshot ', function () {
+      const { baseElement }= render(<PlantItem key={1212} navigation={{}} plantObj={onePlant} />)
+      expect(baseElement).toMatchSnapshot()
+    });
   
-// });
+});
 
 
 const onePlant = {

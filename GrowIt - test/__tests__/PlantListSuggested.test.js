@@ -1,67 +1,45 @@
-import React from 'react'
+import React, { useState as useStateMock } from 'react';
+import axios from 'axios';
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+import MockAdapter from 'axios-mock-adapter';
 import { render } from '@testing-library/react-native'
 import PlantListSuggested from '../src/components/PlantsListSuggested/PlantListSuggested'
 import { Provider } from 'react-redux'
-import configureStore from 'redux-mock-store'
-import axios from 'axios';
 const { setPlantList} = require("../src/redux/actions/plantActions")
 
-import configureMockStore from 'redux-mock-store'
+jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useState: jest.fn(),
+  }));
+const initialState = {
+    plantsReducer: {
+        location: {
+            lat: 30, lon: 30
+        },
+        plantsList:PlantsListMock,
 
-
-
-import thunk from 'redux-thunk'
-
+    }
+}
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
-
-jest.mock('axios')
+const mock = new MockAdapter(axios);
+const store = mockStore(initialState);
 describe('PlantListSuggested component Test', function () {
-    const initialState = {
-            plantsReducer: {
-                location: {
-                    lat: 30, lon: 20
-                },
-                plantsList:PlantsListMock
-            }
-    }
-    // const mockStore = configureStore()
-    test('render plant list suggested component snapshot ', function () {
-        store = mockStore(initialState)
-        axios.get.mockImplementationOnce(()=>  Promise.resolve(PlantsResponseMock))
-        store.dispatch(setPlantList(PlantsResponseMock.data.dbresult))
-
-       
+    const setIsLoading = jest.fn();
+    beforeEach(() => {
+        store.clearActions();
+        useStateMock.mockImplementation(isLoading => [isLoading, setIsLoading])
+    });
+    test('render plant list suggested component snapshot ', async function () {
+        mock.onGet(`https://mobile-final-project-server.herokuapp.com/GrowIt/api/plants/30/30`).reply(200, {
+            data: PlantsResponseMock.data.dbresult,
+        });
+        const data = await store.dispatch(setPlantList(PlantsResponseMock.data.dbresult))
         const { baseElement } = render(<Provider store={store}><PlantListSuggested route={{ params: { buttonType: "plants" } }} /></Provider>)
         expect(baseElement).toMatchSnapshot()
     });
-
-    // test('render plant page component without start grow button snapshot', function () {
-    //     store = mockStore(initialState)
-    //     const { baseElement }= render(<Provider store = {store}><PlantPage route={{params:{ plantObj:onePlant, buttonFlag:false }}} /></Provider>)
-    //     expect(baseElement).toMatchSnapshot()
-    // });
-
 });
-
-
-const onePlant = {
-    months: [7, 1, 8, 9, 2, 3, 4],
-    _id: '5f0da4922f105dcd2e8b681c',
-    name: 'Cucumber',
-    family: 'Cucurbitaceae',
-    description: `Its elongated fruit is juicy and very rich in water. Its green color is eaten raw, pickled in salt or pickled.The plant originated in India, where humans began growing it about 3, 000 years ago.Today, cucumber is a very common vegetable, and it is grown in greenhouses or open fields.`,
-    type: 'vegetables',
-    waterAmount: '259200',
-    imgUrl: 'https://img.wcdn.co.il/f_auto,w_1200,t_54/1/4/9/8/1498895-46.jpg',
-    howToITreat:
-        'Water the cucumbers until the soil is thoroughly absorbed and maintain this moisture at all times.',
-    recommendedTemp: 25,
-    recommendedHumidity: 25,
-    recommendedClouds: 15
-}
-
-
 
 const PlantsResponseMock = {
     data:{
