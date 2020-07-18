@@ -39,9 +39,10 @@ export const initSystem = () => async (dispatch) => {
   try {
     const response = await fetch(getTypesURL).then((res) => res.json());
     const memoInit = await fetchMemo().catch(() => {
-      return []
+      return [];
     });
-    const coordinates = await askPermissionFromUser().catch(() => { // for AVD/testing
+    const coordinates = await askPermissionFromUser().catch(() => {
+      // for AVD/testing
       return { coords: { latitude: '30', longitude: '30' } };
     });
     dispatch({
@@ -125,12 +126,11 @@ const myToast = (textMessage) => {
       buttonTextStyle: { fontFamily: 'Comfortaa_600SemiBold', color: 'blue' },
       type: 'success',
       duration: 2500
-    })
-
+    });
   } catch (e) {
-    return e.message
+    return e.message;
   }
-}
+};
 export const irrigatePlantAndUpdate = (plant) => async (dispatch) => {
   const timeToIrrigate = Date.now() / 1000 + Number(plant.waterAmount);
   if (plant.notificationId !== undefined) {
@@ -138,11 +138,15 @@ export const irrigatePlantAndUpdate = (plant) => async (dispatch) => {
     cancelScheduledNotification(prevNotificationId);
   }
   try {
-
-    notificationId = await setNotification('GrowItApp', `Time to irrigate ${plant.name} !💦`, plant.imgUrl, Number(plant.waterAmount) * 1000)
+    notificationId = await setNotification(
+      'GrowItApp',
+      `Time to irrigate ${plant.name} !💦`,
+      plant.imgUrl,
+      Number(plant.waterAmount) * 1000
+    );
     Object.assign(plant, { nextIrrigate: timeToIrrigate, notificationId });
-    myToast(`${plant.name} is glad you take care of it ! 💦🌲`)
-    let data = await fetchMemo()
+    myToast(`${plant.name} is glad you take care of it ! 💦🌲`);
+    let data = await fetchMemo();
     data = data.filter((item) => item._id !== plant._id);
     data = [...data, plant];
     dispatch({
@@ -150,10 +154,9 @@ export const irrigatePlantAndUpdate = (plant) => async (dispatch) => {
       updatedMyPlantsArray: data
     });
   } catch (e) {
-    console.log('irrigatePlantAndUpdate error ->', e)
+    console.log('irrigatePlantAndUpdate error ->', e);
   }
 };
-
 
 export const removeFromDevice = (plant) => async (dispatch) => {
   if (plant.notificationId !== undefined) {
@@ -161,15 +164,15 @@ export const removeFromDevice = (plant) => async (dispatch) => {
     console.log('plant.notificationId removed! ->', plant.notificationId);
   }
   try {
-    myToast(`${plant.name} remove 🙁`)
-    let data = await fetchMemo()
+    myToast(`${plant.name} remove 🙁`);
+    let data = await fetchMemo();
     data = data.filter((item) => item._id !== plant._id);
     dispatch({
       type: SET_MY_PLANTS_LIST,
       updatedMyPlantsArray: data
     });
   } catch (e) {
-    console.log('failed to remove! = ', e.message)
+    console.log('failed to remove! = ', e.message);
   }
 };
 

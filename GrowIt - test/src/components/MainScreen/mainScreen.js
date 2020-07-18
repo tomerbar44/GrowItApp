@@ -10,7 +10,7 @@ import styles from './style';
 const MainScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(initSystem())
+    dispatch(initSystem());
   }, []);
 
   const types = useSelector((state) => state.plantsReducer.types);
@@ -24,41 +24,41 @@ const MainScreen = ({ navigation }) => {
       {types.length === 0 ? (
         <Loading />
       ) : (
-          <FlatList
-            key={2}
-            keyExtractor={(item) => item}
-            data={types}
-            renderItem={({ item }) => (
-              <View style={styles.margin}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('PlantListSuggested', {
-                      buttonType: item
-                    });
-                  }}
-                >
-                  <Card>
-                    <CardItem style={styles.cardStyle}>
-                      <Left>
-                        <Body>
-                          <Text style={styles.txtStyle}>{item}</Text>
-                        </Body>
-                      </Left>
-                    </CardItem>
-                    <CardItem cardBody style={styles.cardStyle}>
-                      <Image
-                        source={{
-                          uri: `https://mobile-final-project-growit.s3-eu-west-1.amazonaws.com/${item}.png`
-                        }}
-                        style={styles.imgStyle}
-                      />
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>
-              </View>
-            )}
-          />
-        )}
+        <FlatList
+          key={2}
+          keyExtractor={(item) => item}
+          data={types}
+          renderItem={({ item }) => (
+            <View style={styles.margin}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('PlantListSuggested', {
+                    buttonType: item
+                  });
+                }}
+              >
+                <Card>
+                  <CardItem style={styles.cardStyle}>
+                    <Left>
+                      <Body>
+                        <Text style={styles.txtStyle}>{item}</Text>
+                      </Body>
+                    </Left>
+                  </CardItem>
+                  <CardItem cardBody style={styles.cardStyle}>
+                    <Image
+                      source={{
+                        uri: `https://mobile-final-project-growit.s3-eu-west-1.amazonaws.com/${item}.png`
+                      }}
+                      style={styles.imgStyle}
+                    />
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 };

@@ -1,1 +1,1 @@
-export default from '@react-native-communityasync-storagejestasync-storage-mock'
+export default from '@react-native-communityasync-storagejestasync-storage-mock';

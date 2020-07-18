@@ -2,12 +2,7 @@
 
 // we can add npm test -- --watch to run test all the time
 // const { testEnvironment } = require("jest-expo/jest-preset")
-import {
-  SET_PLANTS_LIST,
-  SET_MY_PLANTS_LIST,
-  ADD_PLANT_TO_LIST,
-  INIT_SYS
-} from '../src/redux/actions/plantsTypes';
+import { SET_PLANTS_LIST, ADD_PLANT_TO_LIST, INIT_SYS } from '../src/redux/actions/plantsTypes';
 import 'react-native';
 import plantsReducer from '../src/redux/reducers/plantsReducer';
 // import MockAsyncStorage from 'mock-async-storage';
@@ -53,8 +48,8 @@ describe('plantsReducer Test', function () {
     );
 
     expect(state.myPlants).toHaveLength(3);
-    expect(state.plantsList).toHaveLength(0)
-        // AsyncStorage.getItem('testKey')
+    expect(state.plantsList).toHaveLength(0);
+    // AsyncStorage.getItem('testKey')
     // .then((stringValue) => {
 
     //  return JSON.parse(stringValue)
@@ -78,8 +73,8 @@ describe('plantsReducer Test', function () {
 
     expect(state.location.lat).toBe('20');
     expect(state.location.lon).toBe('20');
-    expect(state).toHaveProperty('types',['flowers', 'fruits']);
-    expect(state.myPlants).toMatchObject({waterAmount: '259200'});
+    expect(state).toHaveProperty('types', ['flowers', 'fruits']);
+    expect(state.myPlants).toMatchObject({ waterAmount: '259200' });
   });
 });
 
