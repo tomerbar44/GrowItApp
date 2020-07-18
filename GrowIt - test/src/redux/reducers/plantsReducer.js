@@ -5,6 +5,7 @@ import {
   INIT_SYS
 } from '../actions/plantsTypes';
 import { AsyncStorage } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 async function saveToMemory(plantToAdd) {
   try {

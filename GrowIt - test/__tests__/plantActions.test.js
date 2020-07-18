@@ -3,8 +3,8 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
 
-const { initSystem, addToMyPlants } = require("../src/redux/actions/plantActions")
-const { INIT_SYS, ADD_PLANT_TO_LIST } = require("../src/redux/actions/plantsTypes")
+const { initSystem, addToMyPlants, irrigatePlantAndUpdate, removeFromDevice, setPlantList } = require("../src/redux/actions/plantActions")
+const { INIT_SYS, ADD_PLANT_TO_LIST, SET_MY_PLANTS_LIST, SET_PLANTS_LIST } = require("../src/redux/actions/plantsTypes")
 
 /**
  * check array example
@@ -31,15 +31,10 @@ const mockStore = configureMockStore(middlewares)
 // jest.mock('../../../node_modules/native-base', () => {
 //     return { }
 // })
+
 describe("plant Action Test", function () {
-    afterEach(() => {
-        fetchMock.restore()
-    })
+
     test('addToMyPlants', function () {
-        // fetchMock.getOnce('/plant', {
-        //     body: { plant: onePlant },
-        //     headers: { 'content-type': 'application/json' }
-        // })
         expectedActions = [{
             type: ADD_PLANT_TO_LIST,
             plant: onePlant
@@ -50,11 +45,7 @@ describe("plant Action Test", function () {
             types: [],
             myPlants: [] // the init is to bring from memory the former plants
         })
-        // expect(store.getActions()).toContain({ plant: onePlant });
-        // expect(store.getActions()).toHaveProperty('addedAt',getHumanDate());
-        // console.log('store.dispatch(addToMyPlants(onePlant)) ---> ', store.dispatch(addToMyPlants(onePlant)))
         store.dispatch(addToMyPlants(onePlant))
-        console.log('store.getActions() => ', store.getActions())
         expect(store.getActions()).toEqual(expectedActions)
         expect(store.getActions()).toHaveLength(1);
         expect(store.getActions()).toEqual(expect.arrayContaining([
@@ -63,42 +54,87 @@ describe("plant Action Test", function () {
     })
 
 
-    test('initSystem', function () {
-        fetchMock.getOnce('/init', {
-            body: {
-                type: INIT_SYS,
-                lat: '30',
-                lon: '30',
-                types: ["flowers", 'plants', 'fruits', 'vegetables'],
-                data: []
-            },
-            headers: { 'content-type': 'application/json' }
-        })
+    test('initSystem', async function () {
         global.fetch = jest.fn(() =>
             Promise.resolve({
-                json: () => Promise.resolve({ types: ["flowers", 'plants', 'fruits', 'vegetables'] })
+                json: () => Promise.resolve({ dbresult: ["flowers", 'plants', 'fruits', 'vegetables'] })
             }))
 
-        const store = mockStore({
-            location: { lat: null, lon: null },
-            plantsList: [],
-            types: ["flowers", 'plants', 'fruits', 'vegetables'],
-            myPlants: [] // the init is to bring from memory the former plants
-        })
+        try {
+            const myDis = jest.fn()
+            await initSystem()(myDis)
+            expect(myDis).toHaveBeenCalled();
+            const expectedReturn = {
+                type: INIT_SYS,
+                lat: "30",
+                lon: "30",
+                types: ["flowers", 'plants', 'fruits', 'vegetables'],
+                data: []
+            };
+            expect(myDis).toHaveBeenCalledWith(expectedReturn);
+            expect(myDis).toHaveReturned()
 
-        expectedActions = [{
-            type: INIT_SYS,
-            lat: '30',
-            lon: '30',
-            types: ["flowers", 'plants', 'fruits', 'vegetables'],
-            data: []
-        }]
+        } catch (err) {
+            console.log('err -> ', err)
+        }
+    })
 
-        store.dispatch(initSystem())
-        console.log('store.getActions() ---> ', store.getActions())
-    }
 
-    
+    test('irrigatePlantAndUpdate', async function () {
+        try {
+            const myDis = jest.fn()
+            await irrigatePlantAndUpdate(onePlant)(myDis)
+            expect(myDis).toHaveBeenCalled();
+            const expectedReturn = {
+                type: SET_MY_PLANTS_LIST,
+                updatedMyPlantsArray: [onePlant]
+            };
+            expect(myDis).toHaveBeenCalledWith(expectedReturn);
+            expect(myDis.mock.calls[0][0].updatedMyPlantsArray[0]).toHaveProperty('notificationId')
+            expect(myDis.mock.calls[0][0].updatedMyPlantsArray[0]).toHaveProperty('nextIrrigate')
+            expect(myDis).toHaveReturned()
+        } catch (err) {
+            console.log('err -> ', err)
+        }
+    })
+
+    test('removeFromDevice', async function () {
+        try {
+            const store = mockStore({
+                location: { lat: null, lon: null },
+                plantsList: [],
+                types: [],
+                myPlants: [onePlant]
+            })
+            const expectedReturn = {
+                type: SET_MY_PLANTS_LIST,
+                updatedMyPlantsArray: []
+            };
+            await store.dispatch(await removeFromDevice(onePlant))
+            expect(store.getActions()).not.toContain(onePlant);
+            expect(store.getActions()[0]).toEqual(expectedReturn);
+        } catch (err) {
+            console.log('err -> ', err)
+        }
+    })
+
+    test('setPlantList', async function () {
+        try {
+            const myDis = jest.fn()
+            await setPlantList([onePlant,onePlant2])(myDis)
+            expect(myDis).toHaveBeenCalled();
+            const expectedReturn = {
+                type: SET_PLANTS_LIST,
+                plantsList: [onePlant,onePlant2]
+            };
+            expect(myDis).toHaveBeenCalledWith(expectedReturn);
+            expect(myDis).toHaveReturned()
+        } catch (e) {
+            console.log('e -> ', e.message)
+        }
+    })
+})
+
 
 
 const onePlant = {
@@ -116,11 +152,10 @@ const onePlant = {
     recommendedHumidity: 25,
     recommendedClouds: 15
 }
-
 const onePlant2 = {
     months: [7, 1, 8, 9, 2, 3, 4],
-    _id: '5f0da4922f105dcd2e8b681c',
-    name: 'Cucumberrrrrrrr ',
+    _id: '5f0da4922f105dcdc186b8e2',
+    name: 'Cucumberrrr ',
     family: 'Cucurbitaceae',
     description: `Its elongated fruit is juicy and very rich in water. Its green color is eaten raw, pickled in salt or pickled.The plant originated in India, where humans began growing it about 3, 000 years ago.Today, cucumber is a very common vegetable, and it is grown in greenhouses or open fields.`,
     type: 'vegetables',
