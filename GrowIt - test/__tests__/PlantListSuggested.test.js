@@ -37,7 +37,7 @@ describe('PlantListSuggested component Test', function () {
       .reply(200, {
         data: PlantsResponseMock.data.dbresult
       });
-    const data = await store.dispatch(setPlantList(PlantsResponseMock.data.dbresult));
+    await store.dispatch(setPlantList(PlantsResponseMock.data.dbresult));
     const { baseElement } = render(
       <Provider store={store}>
         <PlantListSuggested route={{ params: { buttonType: 'plants' } }} />

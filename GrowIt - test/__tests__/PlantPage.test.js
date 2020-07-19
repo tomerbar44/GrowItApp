@@ -8,7 +8,7 @@ describe('PlantPage component Test', function () {
   const initialState = { output: 10 };
   const mockStore = configureStore();
   test('render plant page component snapshot ', function () {
-    store = mockStore(initialState);
+    const store = mockStore(initialState);
     const { baseElement } = render(
       <Provider store={store}>
         <PlantPage route={{ params: { plantObj: onePlant, buttonFlag: true } }} />
@@ -18,7 +18,7 @@ describe('PlantPage component Test', function () {
   });
 
   test('render plant page component without start grow button snapshot', function () {
-    store = mockStore(initialState);
+    const store = mockStore(initialState);
     const { baseElement } = render(
       <Provider store={store}>
         <PlantPage route={{ params: { plantObj: onePlant, buttonFlag: false } }} />

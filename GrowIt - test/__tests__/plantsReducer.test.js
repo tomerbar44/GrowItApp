@@ -1,21 +1,6 @@
-/* jest env jest */
-
-// we can add npm test -- --watch to run test all the time
-// const { testEnvironment } = require("jest-expo/jest-preset")
 import { SET_PLANTS_LIST, ADD_PLANT_TO_LIST, INIT_SYS } from '../src/redux/actions/plantsTypes';
 import 'react-native';
 import plantsReducer from '../src/redux/reducers/plantsReducer';
-// import MockAsyncStorage from 'mock-async-storage';
-// import renderer from 'react-test-renderer';
-
-// const mock = () => {
-//   const mockImpl = new MockAsyncStorage()
-//   jest.mock('AsyncStorage', () => mockImpl)
-// }
-
-// mock();
-
-// import { AsyncStorage as storage } from 'react-native'
 
 describe('plantsReducer Test', function () {
   test('has init state', function () {
@@ -38,7 +23,7 @@ describe('plantsReducer Test', function () {
         location: { lat: null, lon: null },
         plantsList: [],
         types: [],
-        myPlants: PlantsListMock // the init is to bring from memory the former plants
+        myPlants: PlantsListMock 
       },
       {
         type: ADD_PLANT_TO_LIST,
@@ -49,18 +34,7 @@ describe('plantsReducer Test', function () {
 
     expect(state.myPlants).toHaveLength(3);
     expect(state.plantsList).toHaveLength(0);
-    // AsyncStorage.getItem('testKey')
-    // .then((stringValue) => {
-
-    //  return JSON.parse(stringValue)
-    // })
-    // .then((objValue) => {
-    //   expect(objValue).toHaveLength(3)
-    //   AsyncStorage.clear('testKey').then((e) => console.log('test ket cleared!'))
-    // })
   });
-
-  //! SET_MY_PLANTS_LIST is the same if not testing memory
 
   test('set init state ', function () {
     const state = plantsReducer(undefined, {

@@ -1,10 +1,9 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { render } from '@testing-library/react-native';
+import { create, act } from 'react-test-renderer';
 import MainScreen from '../src/components/MainScreen/MainScreen';
 import { Provider } from 'react-redux';
-import { act } from 'react-test-renderer';
 const { initSystem } = require('../src/redux/actions/plantActions');
 
 jest.mock('react', () => ({
@@ -35,18 +34,15 @@ describe('MainScreen component Test', function () {
   );
   test('render main screen component snapshot ', async function () {
     await store.dispatch(initSystem());
-    const { baseElement } = render(
-      <Provider store={store}>
-        <MainScreen />
-      </Provider>
-    );
-    await act(async () => {
-      const { baseElement } = await render(
+
+    let root;
+    act(() => {
+      root = create(
         <Provider store={store}>
           <MainScreen />
         </Provider>
       );
-      expect(baseElement).toMatchSnapshot();
-    })
+    });
+    expect(root.toJSON()).toMatchSnapshot();
   });
 });

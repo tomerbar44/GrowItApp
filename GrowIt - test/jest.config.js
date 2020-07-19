@@ -4,7 +4,7 @@ const jestPreset = require('@testing-library/react-native/jest-preset');
 module.exports = Object.assign(expoPreset, jestPreset, {
   setupFiles: [...expoPreset.setupFiles, ...jestPreset.setupFiles],
   setupFilesAfterEnv: [
-    '@testing-library/react-native/cleanup-after-each' /*,'<rootDir>/setup-tests.js'*/
+    '@testing-library/react-native/cleanup-after-each'
   ],
   transformIgnorePatterns: [
     'node_modules/(?!(react-native|my-project|react-native-button|expo-location|native-base)/)'

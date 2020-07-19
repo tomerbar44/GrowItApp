@@ -8,10 +8,10 @@ describe('Modal component Test', function () {
   const initialState = { output: 10 };
   const mockStore = configureStore();
   test('render modal component snapshot ', function () {
-    store = mockStore(initialState);
+    const store = mockStore(initialState);
     const { baseElement } = render(
       <Provider store={store}>
-        <Modal modalVisible={{ obj: onePlant, flag: true }} setModalVisible={() => {}} />
+        <Modal modalVisible={{ obj: onePlant, flag: true }} setModalVisible={jest.fn()} />
       </Provider>
     );
     expect(baseElement).toMatchSnapshot();

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-
 import { Image } from 'react-native';
 import { Container, Content, Card, CardItem, Text, Button, Left, Body, Toast } from 'native-base';
 import { addToMyPlants } from '../../redux/actions/plantActions';

@@ -20,7 +20,7 @@ const mockStore = configureMockStore(middlewares);
 
 describe('plant Action Test', function () {
   test('addToMyPlants', function () {
-    expectedActions = [
+    const expectedActions = [
       {
         type: ADD_PLANT_TO_LIST,
         plant: onePlant
@@ -30,7 +30,7 @@ describe('plant Action Test', function () {
       location: { lat: null, lon: null },
       plantsList: [],
       types: [],
-      myPlants: [] // the init is to bring from memory the former plants
+      myPlants: [] 
     });
     store.dispatch(addToMyPlants(onePlant));
     expect(store.getActions()).toEqual(expectedActions);
