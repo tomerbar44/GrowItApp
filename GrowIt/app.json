@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "growitapp",
+    "name": "GrowIt",
+    "slug": "GrowItapp",
     "platforms": [
       "ios",
       "android",

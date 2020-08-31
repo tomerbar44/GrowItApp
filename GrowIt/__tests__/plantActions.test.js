@@ -115,7 +115,7 @@ describe('plant Action Test', function () {
       expect(myDis).toHaveBeenCalledWith(expectedReturn);
       expect(myDis).toHaveReturned();
     } catch (e) {
-      console.log('e -> ', e.message);
+      console.log('e ->', e.message);
     }
   });
 });
